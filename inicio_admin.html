@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Resumen del punto de venta Dolcetto">
+    <title>Inicio | Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <!-- Navegacion principal -->
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio">
+            <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
+        </a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion menu_activa" href="inicio_admin.html" aria-current="page">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion" href="#">Devolución</a>
+            <a class="menu_opcion" href="#">Compra</a>
+            <a class="menu_opcion" href="#">Productos</a>
+            <a class="menu_opcion" href="#">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta">
+            <span class="chip_usuario">admin · Administrador</span>
+            <a class="boton_sec" href="#">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <!-- Resumen del dia -->
+    <main class="contenedor">
+        <section class="intro" aria-labelledby="titulo_inicio">
+            <div>
+                <h1 class="titulo_pagina" id="titulo_inicio">Buenos días, Admin</h1>
+                <p class="subtitulo">Este es el resumen de lo que ocurre hoy en Dolcetto.</p>
+            </div>
+        </section>
+
+        <!-- Indicadores principales -->
+        <section class="tarjetas" aria-label="Indicadores del dia">
+            <article class="tarjeta tarj_dato">
+                <span class="icono_dato icono_rojo" aria-hidden="true">$</span>
+                <div>
+                    <h2>Ventas de hoy</h2>
+                    <p class="dato_grande">$<span id="ventas_hoy">8,000.00</span></p>
+                </div>
+            </article>
+            <article class="tarjeta tarj_dato">
+                <span class="icono_dato icono_durazno" aria-hidden="true">▤</span>
+                <div>
+                    <h2>Tickets de venta emitidos</h2>
+                    <p class="dato_grande"><span id="tickets_emitidos">12</span></p>
+                </div>
+            </article>
+            <article class="tarjeta tarj_dato">
+                <span class="icono_dato icono_verde" aria-hidden="true">#</span>
+                <div>
+                    <h2>Productos activos</h2>
+                    <p class="dato_grande"><span id="productos_activos">123</span></p>
+                </div>
+            </article>
+            <article class="tarjeta tarj_dato">
+                <span class="icono_dato icono_ambar" aria-hidden="true">!</span>
+                <div>
+                    <h2>Alertas de stock bajo</h2>
+                    <p class="dato_grande"><span id="alertas_stock">1</span></p>
+                </div>
+            </article>
+        </section>
+
+        <!-- Tablas de actividad e inventario -->
+        <section aria-label="Actividad reciente e inventario">
+            <article class="tarjeta bloque_tabla">
+                <div class="bloque_titulo">
+                    <div>
+                        <h2 class="titulo_bloque">Movimientos recientes</h2>
+                        <p class="nota">Últimas operaciones registradas en el sistema</p>
+                    </div>
+                    <a class="enlace" href="historial_ventas.html">Ver todos ›</a>
+                </div>
+                <div class="tabla_scroll">
+                    <table class="tabla">
+                        <thead>
+                            <tr>
+                                <th class="col_folio" scope="col">Folio</th>
+                                <th class="col_tipo" scope="col">Tipo</th>
+                                <th class="col_usuario" scope="col">Usuario</th>
+                                <th class="col_fecha" scope="col">Fecha y hora</th>
+                                <th class="col_total al_derecha" scope="col">Total</th>
+                                <th class="col_accion" scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpo_movimientos">
+                            <!-- REGISTRO EJEMPLO PARA LA GUIROMI-->
+                            <tr>
+                                <td class="col_folio">V-0042</td>
+                                <td class="col_tipo"><span class="chip chip_ok">Venta</span></td>
+                                <td class="col_usuario">Ana Lisa Meltrozo</td>
+                                <td class="col_fecha">2026-11-22 09:18</td>
+                                <td class="col_total al_derecha">$1,000.00</td>
+                                <td class="col_accion"><a class="enlace_flecha" href="historial_ventas.html" aria-label="Ver detalle de V-0042">›</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <article class="tarjeta bloque_tabla">
+                <div class="bloque_titulo">
+                    <div>
+                        <h2 class="titulo_bloque">Inventario bajo</h2>
+                        <p class="nota">Productos que necesitan atención</p>
+                    </div>
+                    <a class="enlace" href="#">Ver inventario ›</a>
+                </div>
+                <div class="tabla_scroll">
+                    <table class="tabla">
+                        <thead>
+                            <tr>
+                                <th class="col_codigo" scope="col">Código</th>
+                                <th class="col_producto" scope="col">Producto</th>
+                                <th class="col_existencia" scope="col">Existencia</th>
+                                <th class="col_compra" scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpo_inv_bajo">
+                            <!-- FILA DE EJEMPLO: JavaScript la repetirá por cada registro -->
+                            <tr>
+                                <td class="col_codigo">DUL-0184</td>
+                                <td class="col_producto">Mangitos enchilados</td>
+                                <td class="col_existencia"><span class="chip chip_bajo">4 pzas.</span></td>
+                                <td class="col_compra"><a class="boton_prin boton_compra" href="#">Registrar compra</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

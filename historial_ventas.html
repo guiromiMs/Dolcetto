@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Historial de ventas de Dolcetto">
+    <title>Historial de ventas, Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio">
+            <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
+        </a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion menu_activa" href="historial_ventas.html" aria-current="page">Venta</a>
+            <a class="menu_opcion" href="#">Devolución</a>
+            <a class="menu_opcion" href="#">Compra</a>
+            <a class="menu_opcion" href="#">Productos</a>
+            <a class="menu_opcion" href="#">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta">
+            <span class="chip_usuario">admin · Administrador</span>
+            <a class="boton_sec" href="#">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <!-- Consulta de ventas -->
+    <main class="contenedor">
+        <section class="intro" aria-labelledby="titulo_historial">
+            <div>
+                <h1 class="titulo_pagina" id="titulo_historial">Historial de ventas</h1>
+                <p class="subtitulo">Consulta las ventas registradas en tu dulcería.</p>
+            </div>
+        </section>
+
+        <!-- Filtros de consulta -->
+        <section class="tarjeta filtros" aria-label="Filtros de ventas">
+            <h2 class="titulo_bloque">Filtrar ventas</h2>
+            <form id="form_filtros" class="form_filtros">
+                <div class="campo">
+                    <label for="buscar_folio">Buscar por folio</label>
+                    <input class="campo_texto" type="search" id="buscar_folio" name="buscar_folio" placeholder="Ej. V-0042">
+                </div>
+                <div class="campo">
+                    <label for="fecha_inicial">Fecha inicial</label>
+                    <input class="campo_texto" type="date" id="fecha_inicial" name="fecha_inicial">
+                </div>
+                <div class="campo">
+                    <label for="fecha_final">Fecha final</label>
+                    <input class="campo_texto" type="date" id="fecha_final" name="fecha_final">
+                </div>
+                <div class="campo">
+                    <label for="sel_cajero">Cajero</label>
+                    <select class="campo_texto" id="sel_cajero" name="sel_cajero">
+                        <option value="">Todos los cajeros</option>
+                        <option value="ana-garcia">Ana Lisa Meltrozo</option>
+                    </select>
+                </div>
+                <button class="boton_prin" type="submit">Aplicar</button>
+            </form>
+        </section>
+
+        <!-- Resumen de resultados -->
+        <section class="resumen" aria-label="Resumen de ventas">
+            <article class="tarjeta tarj_dato resumen_dato">
+                <span class="icono_dato icono_durazno" aria-hidden="true">▤</span>
+                <div>
+                    <h2>Ventas registradas</h2>
+                    <p class="dato_grande"><span id="ventas_registradas">123</span></p>
+                </div>
+            </article>
+            <article class="tarjeta tarj_dato resumen_dato">
+                <span class="icono_dato icono_rojo" aria-hidden="true">$</span>
+                <div>
+                    <h2>Total facturado</h2>
+                    <p class="dato_grande">$<span id="total_facturado">12,000.00</span></p>
+                </div>
+            </article>
+        </section>
+
+        <section class="tarjeta bloque_tabla tabla_ventas" aria-labelledby="titulo_resultados">
+            <div class="bloque_titulo">
+                <div>
+                    <h2 class="titulo_bloque" id="titulo_resultados">Ventas</h2>
+                    <p class="nota">Detalle de las ventas registradas</p>
+                </div>
+            </div>
+            <div class="tabla_scroll">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th class="col_folio" scope="col">Folio</th>
+                            <th class="col_fecha" scope="col">Fecha y hora</th>
+                            <th class="col_cajero" scope="col">Cajero</th>
+                            <th class="col_articulos" scope="col">Artículos</th>
+                            <th class="col_total al_derecha" scope="col">Total</th>
+                            <th class="col_estado" scope="col">Estado</th>
+                            <th class="col_acciones" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_ventas">
+                        <!-- REGISTRO EJEMPLO PARA LA GUIROMI -->
+                        <tr>
+                            <td class="col_folio">V-0042</td>
+                            <td class="col_fecha">2026-11-22 09:18</td>
+                            <td class="col_cajero">Ana Lisa Meltrozo</td>
+                            <td class="col_articulos">5</td>
+                            <td class="col_total al_derecha">$1,000.00</td>
+                            <td class="col_estado"><span class="chip chip_ok">Completada</span></td>
+                            <td class="col_acciones"><a class="enlace_accion" href="#">Ver detalle</a><span>·</span><a class="enlace_accion" href="#">Reimprimir</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Navegacion entre paginas -->
+            <nav class="paginacion" id="paginacion" aria-label="Paginacion de ventas">
+                <a class="pag_boton" href="#" aria-label="Pagina anterior">‹</a>
+                <span class="pag_actual" aria-current="page">1</span>
+                <a class="pag_boton" href="#" aria-label="Pagina siguiente">›</a>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>

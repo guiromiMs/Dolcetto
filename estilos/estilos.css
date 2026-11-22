@@ -1,0 +1,466 @@
+/* Colores y fuentes */
+:root {
+  --rojo: #B01F33;
+  --vino: #861427;
+  --rosa: #F2D1C9;
+  --fondo: #FBF5EE;
+  --tarjeta: #FFFDF9;
+  --borde: #ECDFD3;
+  --texto: #4A2C2A;
+  --texto_suave: #806966;
+  --campo: #F4DEDA;
+  --borde_campo: #E8B9B4;
+  --durazno: #F9E8DF;
+  --verde_suave: #E3F3E9;
+  --ambar_suave: #FFF1D8;
+  --fuente_titulo: "Fredoka", Arial, sans-serif;
+  --fuente_texto: "Inter", Arial, sans-serif;
+}
+
+/* 2. Base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente_texto);
+  font-size: 14px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+/* Mantiene el contenido centrado y evita que se estire demasiado */
+.contenedor {
+  max-width: 1366px;
+  margin: 0 auto;
+  padding: 32px 48px 48px;
+}
+
+.intro {
+  margin-bottom: 24px;
+}
+
+.titulo_pagina {
+  font-family: var(--fuente_titulo);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.subtitulo {
+  margin-top: 6px;
+  color: var(--texto_suave);
+}
+
+/* 3. Encabezado */
+.encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  min-height: 88px;
+  padding: 16px 32px;
+  background: var(--rosa);
+}
+
+.logo {
+  display: block;
+  width: 132px;
+  height: 52px;
+  object-fit: contain;
+}
+
+/* Permite que las opciones pasen a otra linea si no caben */
+.menu {
+  display: flex;
+  flex: 1 1 500px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.menu_opcion {
+  padding: 10px 13px;
+  border-radius: 24px;
+  background: var(--rojo);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* La opcion activa se distingue con el fondo blanco */
+.menu_opcion:hover,
+.menu_activa {
+  background: white;
+  color: var(--rojo);
+}
+
+.cuenta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.chip_usuario {
+  padding: 9px 12px;
+  border: 1px solid var(--borde_campo);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 4. Componentes que se reutilizan */
+.tarjeta {
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  background: var(--tarjeta);
+  box-shadow: 0 3px 12px rgba(74, 44, 42, 0.04);
+}
+
+/* Los dos botones comparten forma y tamano, pero tienen distinto color */
+.boton_sec,
+.boton_prin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.boton_sec {
+  border: 1px solid var(--rojo);
+  background: none;
+  color: var(--rojo);
+}
+
+.boton_sec:hover {
+  background: rgba(176, 31, 51, 0.07);
+}
+
+.boton_prin {
+  min-height: 44px;
+  padding: 0 24px;
+  background: var(--rojo);
+  color: white;
+}
+
+.boton_prin:hover {
+  background: var(--vino);
+}
+
+.boton_compra {
+  min-height: 34px;
+  padding: 0 8px;
+}
+
+.titulo_bloque {
+  font-family: var(--fuente_titulo);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.bloque_titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px 14px;
+}
+
+.nota {
+  margin-top: 5px;
+  color: var(--texto_suave);
+  font-size: 12px;
+}
+
+.enlace {
+  color: var(--rojo);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.enlace_accion {
+  color: var(--rojo);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.enlace:hover,
+.enlace_accion:hover {
+  color: var(--vino);
+  text-decoration: underline;
+}
+
+/* Las etiquetas comparten forma y cambian de color segun su estado */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chip_ok {
+  background: var(--verde_suave);
+  color: #356F4B;
+}
+
+.chip_bajo {
+  background: var(--ambar_suave);
+  color: #8B5C10;
+}
+
+.enlace_flecha {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--durazno);
+  color: var(--rojo);
+  font-size: 24px;
+  line-height: 1;
+}
+
+/* 5. Tablas; si no caben, el desplazamiento queda dentro de la tarjeta */
+.bloque_tabla {
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.tabla_scroll {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tabla th,
+.tabla td {
+  padding: 13px 16px;
+  white-space: nowrap;
+}
+
+.tabla th {
+  background: var(--rosa);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tabla td {
+  border-bottom: 1px solid var(--borde);
+  font-size: 13px;
+}
+
+/* El fondo alternado ayuda a seguir cada fila */
+.tabla tbody tr:nth-child(even) {
+  background: #FFFAF5;
+}
+
+.tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.al_derecha,
+.col_compra {
+  text-align: right;
+}
+
+/* La columna del simbolo queda angosta para no alargar la tabla */
+.col_accion {
+  width: 52px;
+  text-align: center;
+}
+
+/* 6. Inicio del administrador */
+/* Estas tarjetas resumen las cifras principales del dia */
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.tarj_dato {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 112px;
+  padding: 18px;
+}
+
+.tarj_dato h2,
+.resumen_dato h2 {
+  margin-bottom: 7px;
+  color: var(--texto_suave);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.icono_dato {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-family: var(--fuente_titulo);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Cada clase cambia el color del icono */
+.icono_rojo {
+  background: #F9E4E4;
+  color: var(--rojo);
+}
+
+.icono_durazno {
+  background: var(--durazno);
+  color: #B65C40;
+}
+
+.icono_verde {
+  background: var(--verde_suave);
+  color: #4D9465;
+}
+
+.icono_ambar {
+  background: var(--ambar_suave);
+  color: #A56B10;
+}
+
+.dato_grande {
+  color: var(--rojo);
+  font-family: var(--fuente_titulo);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* 7. Historial de ventas */
+.filtros {
+  margin-bottom: 20px;
+  padding: 20px 22px 22px;
+}
+
+.filtros > .titulo_bloque {
+  margin-bottom: 16px;
+}
+
+/* Acomoda los campos y el boton en una sola fila */
+.form_filtros {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr 1.1fr auto;
+  align-items: end;
+  gap: 14px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.campo label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.campo_texto {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--borde_campo);
+  border-radius: 8px;
+  outline: none;
+  background: var(--campo);
+  color: var(--texto);
+  font-size: 13px;
+}
+
+/* El borde marca el campo que se esta usando */
+.campo_texto:focus {
+  border-color: var(--rojo);
+}
+
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.resumen_dato {
+  min-height: 106px;
+  padding: 20px 22px;
+}
+
+/* Controles para avanzar entre los resultados */
+.paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 16px 20px;
+}
+
+.pag_boton,
+.pag_actual {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+.pag_boton {
+  color: var(--rojo);
+  font-size: 20px;
+}
+
+.pag_actual {
+  border-color: var(--rojo);
+  background: var(--rojo);
+  color: white;
+  font-weight: 700;
+}
