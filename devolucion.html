@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Busqueda de ventas para devoluciones">
+    <title>Devolucion | Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <!-- Navegacion principal -->
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio">
+            <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
+        </a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion menu_activa" href="devolucion.html" aria-current="page">Devolución</a>
+            <a class="menu_opcion" href="compra.html">Compra</a>
+            <a class="menu_opcion" href="#">Productos</a>
+            <a class="menu_opcion" href="#">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta">
+            <span class="chip_usuario">admin · Administrador</span>
+            <a class="boton_sec" href="#">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <!-- Busqueda de venta -->
+    <main class="contenedor">
+        <section class="intro" aria-labelledby="titulo_devolucion">
+            <h1 class="titulo_pagina" id="titulo_devolucion">Devolución</h1>
+        </section>
+
+        <nav class="pasos" aria-label="Pasos de devolucion">
+            <span class="paso paso_activo"><b>1</b> Buscar venta</span>
+            <span class="paso_flecha" aria-hidden="true">›</span>
+            <span class="paso paso_inactivo"><b>2</b> Detalle y confirmación</span>
+        </nav>
+
+        <section class="tarjeta bloque_busqueda" aria-labelledby="titulo_buscar">
+            <h2 class="titulo_bloque" id="titulo_buscar">Buscar venta</h2>
+            <form class="form_busqueda">
+                <div class="campo">
+                    <label for="folio_venta">Folio de venta</label>
+                    <input class="campo_texto" type="search" id="folio_venta" name="folio_venta" placeholder="Ej. V-000124">
+                </div>
+                <div class="campo">
+                    <label for="fecha_venta">Fecha de venta</label>
+                    <input class="campo_texto" type="date" id="fecha_venta" name="fecha_venta">
+                </div>
+                <button class="boton_prin" type="submit">Buscar venta</button>
+            </form>
+            <p class="nota">Busca la venta original antes de registrar una devolución.</p>
+        </section>
+
+        <!-- PENDIENTE: detalle y confirmacion con tabla de productos a devolver -->
+
+        <section class="tarjeta bloque_tabla" aria-labelledby="titulo_encontradas">
+            <div class="bloque_titulo">
+                <h2 class="titulo_bloque" id="titulo_encontradas">Ventas encontradas</h2>
+            </div>
+            <div class="tabla_scroll">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th class="col_folio" scope="col">Folio</th>
+                            <th class="col_fecha" scope="col">Fecha / hora</th>
+                            <th class="col_cajero" scope="col">Cajero</th>
+                            <th class="col_total al_derecha" scope="col">Total</th>
+                            <th class="col_accion" scope="col">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_encontradas">
+                        <!-- FILA DE EJEMPLO: JavaScript la repetirá por cada registro -->
+                        <tr>
+                            <td class="col_folio">V-000124</td>
+                            <td class="col_fecha">2026-11-19 14:35</td>
+                            <td class="col_cajero">carlos</td>
+                            <td class="col_total al_derecha">$110.00</td>
+                            <td class="col_accion"><a class="boton_prin boton_selec" href="#">Seleccionar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <nav class="paginacion" id="paginacion" aria-label="Paginacion de ventas encontradas">
+                <a class="pag_boton" href="#" aria-label="Pagina anterior">‹</a>
+                <span class="pag_actual" aria-current="page">1</span>
+                <a class="pag_boton" href="#" aria-label="Pagina siguiente">›</a>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>

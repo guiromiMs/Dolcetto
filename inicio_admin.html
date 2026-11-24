@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Resumen del punto de venta Dolcetto">
-    <title>Inicio | Dolcetto</title>
+    <title>Inicio Dolcetto</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="estilos/estilos.css">
 </head>
 <body>
-    <!-- Navegacion principal -->
     <header class="encabezado">
         <a href="inicio_admin.html" aria-label="Dolcetto, inicio">
             <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
@@ -17,8 +16,8 @@
         <nav class="menu" aria-label="Navegacion principal">
             <a class="menu_opcion menu_activa" href="inicio_admin.html" aria-current="page">Inicio</a>
             <a class="menu_opcion" href="historial_ventas.html">Venta</a>
-            <a class="menu_opcion" href="#">Devolución</a>
-            <a class="menu_opcion" href="#">Compra</a>
+            <a class="menu_opcion" href="devolucion.html">Devolución</a>
+            <a class="menu_opcion" href="compra.html">Compra</a>
             <a class="menu_opcion" href="#">Productos</a>
             <a class="menu_opcion" href="#">Reportes</a>
             <a class="menu_opcion" href="#">Usuarios</a>
@@ -93,7 +92,6 @@
                             </tr>
                         </thead>
                         <tbody id="cuerpo_movimientos">
-                            <!-- REGISTRO EJEMPLO PARA LA GUIROMI-->
                             <tr>
                                 <td class="col_folio">V-0042</td>
                                 <td class="col_tipo"><span class="chip chip_ok">Venta</span></td>
@@ -126,12 +124,11 @@
                             </tr>
                         </thead>
                         <tbody id="cuerpo_inv_bajo">
-                            <!-- FILA DE EJEMPLO: JavaScript la repetirá por cada registro -->
                             <tr>
                                 <td class="col_codigo">DUL-0184</td>
                                 <td class="col_producto">Mangitos enchilados</td>
                                 <td class="col_existencia"><span class="chip chip_bajo">4 pzas.</span></td>
-                                <td class="col_compra"><a class="boton_prin boton_compra" href="#">Registrar compra</a></td>
+                                <td class="col_compra"><a class="boton_prin boton_compra" href="compra.html">Registrar compra</a></td>
                             </tr>
                         </tbody>
                     </table>

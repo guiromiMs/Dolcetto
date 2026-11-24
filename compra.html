@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Registro de compras de Dolcetto">
+    <title>Compra, Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <!-- Navegacion principal -->
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio">
+            <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
+        </a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion" href="devolucion.html">Devolución</a>
+            <a class="menu_opcion menu_activa" href="compra.html" aria-current="page">Compra</a>
+            <a class="menu_opcion" href="#">Productos</a>
+            <a class="menu_opcion" href="#">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta">
+            <span class="chip_usuario">admin · Administrador</span>
+            <a class="boton_sec" href="#">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <!-- Registro de compra -->
+    <main class="contenedor">
+        <section class="intro" aria-labelledby="titulo_compra">
+            <h1 class="titulo_pagina" id="titulo_compra">Compra</h1>
+        </section>
+
+        <nav class="pestanas" aria-label="Opciones de compra">
+            <a class="pestana pestana_activa" href="compra.html" aria-current="page">Nueva compra</a>
+            <a class="pestana pestana_secunda" href="#">Historial de compras</a>
+        </nav>
+
+        <section class="tarjeta bloque_compra" aria-labelledby="titulo_encabezado">
+            <h2 class="titulo_bloque" id="titulo_encabezado">Encabezado</h2>
+            <div class="form_encabezado">
+                <div class="campo">
+                    <label for="folio_compra">Folio · automático</label>
+                    <input class="campo_texto" type="text" id="folio_compra" name="folio_compra" value="C-000031" readonly>
+                </div>
+                <div class="campo">
+                    <label for="fecha_compra">Fecha · automática</label>
+                    <input class="campo_texto" type="text" id="fecha_compra" name="fecha_compra" value="2026-11-19 15:00" readonly>
+                </div>
+                <div class="campo">
+                    <label for="sel_proveedor">Proveedor</label>
+                    <select class="campo_texto" id="sel_proveedor" name="sel_proveedor">
+                        <option>Dulces del Valle</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="usuario_resp">Responsable · solo lectura</label>
+                    <input class="campo_texto" type="text" id="usuario_resp" name="usuario_resp" value="admin" readonly>
+                </div>
+            </div>
+        </section>
+
+        <section class="tarjeta bloque_compra" aria-labelledby="titulo_detalle">
+            <h2 class="titulo_bloque" id="titulo_detalle">Detalle</h2>
+            <form class="form_detalle">
+                <div class="campo">
+                    <label for="codigo_producto">Código de producto</label>
+                    <input class="campo_texto" type="text" id="codigo_producto" name="codigo_producto" placeholder="Ej. 7501001">
+                </div>
+                <div class="campo">
+                    <label for="buscar_nombre">Buscar por nombre</label>
+                    <input class="campo_texto" type="search" id="buscar_nombre" name="buscar_nombre" placeholder="Ej. Macarons">
+                </div>
+                <button class="boton_prin" type="submit">Agregar producto</button>
+            </form>
+            <div class="tabla_scroll">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th class="col_codigo" scope="col">Código</th>
+                            <th class="col_producto" scope="col">Producto</th>
+                            <th class="col_cantidad" scope="col">Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_detalle">
+                        <tr>
+                            <td class="col_codigo">7501001</td>
+                            <td class="col_producto">Macarons</td>
+                            <td class="col_cantidad">
+                                <div class="control_cantidad">
+                                    <button type="button" aria-label="Reducir cantidad">−</button>
+                                    <span>10</span>
+                                    <button type="button" aria-label="Aumentar cantidad">+</button>
+                                </div>
+                            </td>
+                      
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>
