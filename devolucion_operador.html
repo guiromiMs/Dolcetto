@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devolución | Dolcetto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilos/estilos.css" />
+</head>
+<body>
+
+  <header class="encabezado">
+    <a href="#" class="marca_barra">
+      <img src="imagenes/logo-dolcetto-md.svg" alt="Logo Dolcetto" class="logo" />
+    </a>
+
+    <nav class="menu">
+      <a href="venta_operador.html" class="menu_opcion">Venta</a>
+      <a href="devolucion_operador.html" class="menu_opcion menu_activa">Devolución</a>
+    </nav>
+
+    <div class="cuenta">
+      <span class="chip_usuario">carlos · Operador</span>
+      <a class="boton_sec" href="#">Cerrar sesión</a>
+    </div>
+  </header>
+
+  <main class="dol_contenedor">
+    <h1 class="titulo_pagina" id="titulo_compra">Devolución</h1>
+
+    <div class="dol_pasos">
+      <span class="dol_paso activo">1 · Buscar venta</span>
+      <span class="flecha-paso">→</span>
+      <span class="dol_paso">2 · Detalle y confirmación</span>
+    </div>
+
+    <section class="tarjeta-seccion">
+      <h2>Buscar venta</h2>
+
+      <form class="form-buscar">
+        <div class="dol_campo">
+          <label for="folio-venta">Folio de venta</label>
+          <input type="text" id="folio-venta" class="input-form" placeholder="Folio"/>
+        </div>
+
+        <div class="dol_campo">
+          <label for="fecha-venta">Fecha de venta</label>
+          <input type="date" id="fecha-venta" class="input-form" value="2026-11-19"/>
+        </div>
+
+        <button type="submit" class="btn-primario">
+          <img src="imagenes/lupa.png" alt="" class="icono_btn" />
+          Buscar venta
+        </button>
+      </form>
+
+      <p class="dol_ayuda">Busca la venta original antes de registrar una devolución.</p>
+    </section>
+
+    <section class="tarjeta-seccion">
+      <h2>Ventas encontradas</h2>
+
+      <div class="tabla-caja">
+        <table>
+          <thead>
+            <tr>
+              <th>Folio</th>
+              <th>Fecha / hora</th>
+              <th>Cajero</th>
+              <th>Total</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>folio 12344</td>
+              <td>2026-11-19 3:35</td>
+              <td>carlos</td>
+              <td>$110.00</td>
+              <td>
+                <button type="button" class="btn-seleccionar">Seleccionar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="dol_paginacion">
+        <button type="button" class="btn-pag">‹</button>
+        <button type="button" class="btn-pag activa">1</button>
+        <button type="button" class="btn-pag">›</button>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
