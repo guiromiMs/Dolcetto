@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Venta | Dolcetto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+
+  <header class="encabezado">
+    <a href="#" class="marca_barra">
+      <img src="imagenes/logo-dolcetto-md.svg" alt="Logo Dolcetto" class="logo" />
+    </a>
+
+    <nav class="menu">
+      <a href="venta_operador.html" class="menu_opcion menu_activa">Venta</a>
+      <a href="devolucion_operador.html" class="menu_opcion">Devolución</a>
+    </nav>
+
+    <div class="cuenta">
+      <span class="chip_usuario">carlos · Operador</span>
+      <a class="boton_sec" href="#">Cerrar sesión</a>
+    </div>
+  </header>
+
+  <main class="dol_contenedor">
+    <h1>Venta</h1>
+
+    <div class="rejilla-principal">
+      <section class="panel-productos">
+        <div class="dol_filtros">
+          <div class="dol_campo">
+            <label for="codigo">Código de barras / QR</label>
+            <input type="text" id="codigo" class="input-texto" placeholder="Escanear código"/>
+            <small class="dol_ayuda">Escanea o escribe el código y presiona Enter</small>
+          </div>
+
+          <div class="dol_campo">
+            <label for="buscar-nombre">Buscar por nombre</label>
+            <input type="text" id="buscar-nombre" class="input-texto" placeholder="Escribe el nombre"/>
+          </div>
+
+          <div class="dol_campo">
+            <label>Cantidad</label>
+            <div class="dol_control_cantidad">
+              <button type="button" class="btn-cant">−</button>
+              <span class="num-cant">1</span>
+              <button type="button" class="btn-cant">+</button>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="subtitulo-productos">Productos</h2>
+
+        <div class="rejilla-productos">
+          <article class="tarjeta-producto">
+            <div class="foto-producto">
+              <img src="imagenes/" alt="Cacahuates" />
+            </div>
+            <span class="codigo-prod">(CODIGO) </span>
+            <h3>Cacahuates</h3>
+            <p class="stock">20 disponibles</p>
+            <strong class="precio">$00.00</strong>
+          </article>
+
+        </div>
+      </section>
+
+      <aside class="panel-venta">
+        <h2>Venta actual</h2>
+
+        <div class="estado-vacio">
+          <p>Tu venta está vacía</p>
+        </div>
+
+        <div class="resumen-montos">
+          <div class="fila-monto">
+            <span>Subtotal</span>
+            <span>$0.00</span>
+          </div>
+          <div class="fila-monto">
+            <span>IVA (0) %</span>
+            <span>$0.00</span>
+          </div>
+          <div class="fila-total">
+            <strong>Total</strong>
+            <strong class="total-grande">$0.00</strong>
+          </div>
+          <p class="nota-venta">Agrega un producto para comenzar.</p>
+        </div>
+
+        <div class="acciones-venta">
+          <button type="button" class="btn-pagar">Pagar $0.00</button>
+          <button type="button" class="btn-vaciar">Vaciar venta</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+</body>
+</html>
