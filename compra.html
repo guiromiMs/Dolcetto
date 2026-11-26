@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="estilos/estilos.css">
 </head>
 <body>
-    <!-- Navegacion principal -->
     <header class="encabezado">
         <a href="inicio_admin.html" aria-label="Dolcetto, inicio">
             <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
@@ -19,8 +18,8 @@
             <a class="menu_opcion" href="historial_ventas.html">Venta</a>
             <a class="menu_opcion" href="devolucion.html">Devolución</a>
             <a class="menu_opcion menu_activa" href="compra.html" aria-current="page">Compra</a>
-            <a class="menu_opcion" href="#">Productos</a>
-            <a class="menu_opcion" href="#">Reportes</a>
+            <a class="menu_opcion" href="productos.html">Productos</a>
+            <a class="menu_opcion" href="reportes.html">Reportes</a>
             <a class="menu_opcion" href="#">Usuarios</a>
         </nav>
         <div class="cuenta">
@@ -37,7 +36,7 @@
 
         <nav class="pestanas" aria-label="Opciones de compra">
             <a class="pestana pestana_activa" href="compra.html" aria-current="page">Nueva compra</a>
-            <a class="pestana pestana_secunda" href="#">Historial de compras</a>
+            <a class="pestana pestana_secunda" href="compra_historial.html">Historial de compras</a>
         </nav>
 
         <section class="tarjeta bloque_compra" aria-labelledby="titulo_encabezado">
@@ -73,7 +72,7 @@
                 </div>
                 <div class="campo">
                     <label for="buscar_nombre">Buscar por nombre</label>
-                    <input class="campo_texto" type="search" id="buscar_nombre" name="buscar_nombre" placeholder="Ej. Macarons">
+                    <input class="campo_texto" type="search" id="buscar_nombre" name="buscar_nombre" placeholder="Ej. Gomitas de Mango">
                 </div>
                 <button class="boton_prin" type="submit">Agregar producto</button>
             </form>
@@ -84,12 +83,15 @@
                             <th class="col_codigo" scope="col">Código</th>
                             <th class="col_producto" scope="col">Producto</th>
                             <th class="col_cantidad" scope="col">Cantidad</th>
+                            <th class="col_costo" scope="col">Costo unitario</th>
+                            <th class="col_total al_derecha" scope="col">Importe</th>
                         </tr>
                     </thead>
                     <tbody id="cuerpo_detalle">
+                        <!-- FILA DE EJEMPLO: JavaScript la repetirá por cada registro -->
                         <tr>
                             <td class="col_codigo">7501001</td>
-                            <td class="col_producto">Macarons</td>
+                            <td class="col_producto">Gomitas de Mango</td>
                             <td class="col_cantidad">
                                 <div class="control_cantidad">
                                     <button type="button" aria-label="Reducir cantidad">−</button>
@@ -97,10 +99,21 @@
                                     <button type="button" aria-label="Aumentar cantidad">+</button>
                                 </div>
                             </td>
-                      
+                            <td class="col_costo">
+                                <label class="solo_lector" for="costo_producto">Costo unitario de Gomitas de Mango</label>
+                                <input class="campo_texto campo_costo" type="text" id="costo_producto" name="costo_producto" value="$14.00">
+                            </td>
+                            <td class="col_total al_derecha">$140.00</td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="barra_total">
+                <p>Total <span class="dato_grande">$<span id="total_compra">140.00</span></span></p>
+                <div class="acciones_total">
+                    <a class="boton_sec" href="compra.html">Cancelar</a>
+                    <button class="boton_ok" type="button">Confirmar compra</button>
+                </div>
             </div>
         </section>
 

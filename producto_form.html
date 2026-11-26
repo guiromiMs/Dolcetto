@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulario de producto Dolcetto">
+    <title>Nuevo producto | Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio"><img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto"></a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion" href="devolucion.html">Devolución</a>
+            <a class="menu_opcion" href="compra.html">Compra</a>
+            <a class="menu_opcion menu_activa" href="productos.html" aria-current="page">Productos</a>
+            <a class="menu_opcion" href="reportes.html">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta"><span class="chip_usuario">admin · Administrador</span><a class="boton_sec" href="#">Cerrar sesión</a></div>
+    </header>
+    <main class="contenedor">
+        <section class="intro" aria-labelledby="titulo_formulario">
+            <!-- JavaScript cambia este titulo a Editar producto cuando corresponda -->
+            <h1 class="titulo_pagina" id="titulo_formulario">Nuevo producto</h1>
+        </section>
+        <form>
+            <div class="form_producto">
+                <section class="tarjeta panel_producto" aria-labelledby="titulo_datos">
+                    <h2 class="titulo_bloque" id="titulo_datos">Datos del producto</h2>
+                    <div class="campos_producto">
+                        <div class="campo">
+                            <label for="id_producto">ID interno</label>
+                            <input class="campo_texto" type="text" id="id_producto" name="id_producto" value="Automático" readonly>
+                        </div>
+                        <div class="campo">
+                            <label for="codigo_producto">Código de barras / QR único</label>
+                            <input class="campo_texto" type="text" id="codigo_producto" name="codigo_producto">
+                            <p class="msj_error oculto" id="msj_codigo"></p>
+                        </div>
+                        <div class="campo">
+                            <label for="nombre_producto">Nombre</label>
+                            <input class="campo_texto" type="text" id="nombre_producto" name="nombre_producto">
+                        </div>
+                        <div class="campo">
+                            <label for="precio_producto">Precio</label>
+                            <input class="campo_texto" type="number" id="precio_producto" name="precio_producto" step="0.01">
+                        </div>
+                        <div class="campo">
+                            <label for="sel_estado">Estado</label>
+                            <select class="campo_texto" id="sel_estado" name="sel_estado">
+                                <option>Activo</option><option>Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="campo campo_ancho">
+                            <label for="desc_producto">Descripción</label>
+                            <textarea class="campo_texto campo_descripcion" id="desc_producto" name="desc_producto"></textarea>
+                        </div>
+                    </div>
+                </section>
+                <section class="tarjeta panel_imagen" aria-labelledby="titulo_imagen">
+                    <h2 class="titulo_bloque" id="titulo_imagen">Imagen del producto</h2>
+                    <div class="vista_previa" id="vista_previa" aria-label="Vista previa de imagen"></div>
+                    <div class="campo">
+                        <label for="imagen_producto">Subir imagen</label>
+                        <input class="campo_texto campo_archivo" type="file" id="imagen_producto" name="imagen_producto" accept="image/*">
+                    </div>
+                    <p class="nota">Mínimo una imagen. Formatos JPG o PNG.</p>
+                </section>
+            </div>
+            <div class="acciones_form">
+                <a class="boton_sec" href="productos.html">Cancelar</a>
+                <button class="boton_prin" type="submit">Guardar producto</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

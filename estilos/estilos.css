@@ -13,17 +13,18 @@
   --durazno: #F9E8DF;
   --verde_suave: #E3F3E9;
   --ambar_suave: #FFF1D8;
+  --pistache: #8FCBA6;
   --fuente_titulo: "Fredoka", Arial, sans-serif;
   --fuente_texto: "Inter", Arial, sans-serif;
 }
 
 /* 2. Base */
 * {
-  box-sizing: border-box;
+  box-sizing: border-box; /* Hace que el relleno cuente dentro del ancho definido */
 }
 
 body {
-  margin: 0;
+  margin: 0; /* Quita el margen que el navegador agrega por defecto */
   background: var(--fondo);
   color: var(--texto);
   font-family: var(--fuente_texto);
@@ -51,7 +52,7 @@ select {
 .contenedor {
   max-width: 1366px;
   margin: 0 auto;
-  padding: 32px 48px 48px;
+  padding: 32px 48px 48px; /* Deja espacio para que el contenido respire */
 }
 
 .intro {
@@ -72,7 +73,7 @@ select {
 
 /* 3. Encabezado */
 .encabezado {
-  display: flex;
+  display: flex; /* Junta logo, menú y cuenta, con espacio para que puedan acomodarse */
   flex-wrap: wrap;
   align-items: center;
   gap: 20px;
@@ -85,7 +86,7 @@ select {
   display: block;
   width: 132px;
   height: 52px;
-  object-fit: contain;
+  object-fit: contain; /* Conserva el logo completo sin estirarlo */
 }
 
 /* Permite que las opciones pasen a otra linea si no caben */
@@ -105,7 +106,7 @@ select {
   color: white;
   font-size: 13px;
   font-weight: 600;
-  white-space: nowrap;
+  white-space: nowrap; /* Evita que el nombre de una opción se parta */
 }
 
 /* La opcion activa se distingue con el fondo blanco */
@@ -133,7 +134,7 @@ select {
 
 /* 4. Componentes que se reutilizan */
 .tarjeta {
-  border: 1px solid var(--borde);
+  border: 1px solid var(--borde); /* Delimita cada bloque sin hacerlo pesado */
   border-radius: 14px;
   background: var(--tarjeta);
   box-shadow: 0 3px 12px rgba(74, 44, 42, 0.04);
@@ -168,7 +169,7 @@ select {
 .boton_prin {
   min-height: 44px;
   padding: 0 24px;
-  background: var(--rojo);
+  background: var(--rojo); /* Resalta la acción principal de la pantalla */
   color: white;
 }
 
@@ -190,7 +191,7 @@ select {
 .bloque_titulo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Deja el título y el enlace en extremos opuestos */
   gap: 16px;
   padding: 20px 22px 14px;
 }
@@ -261,12 +262,12 @@ select {
 }
 
 .tabla_scroll {
-  overflow-x: auto;
+  overflow-x: auto; /* Si la tabla no cabe, se desliza dentro de su propia tarjeta */
 }
 
 .tabla {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: collapse; /* Evita bordes dobles entre las celdas */
   text-align: left;
 }
 
@@ -277,7 +278,7 @@ select {
 }
 
 .tabla th {
-  background: var(--rosa);
+  background: var(--rosa); /* Hace que los encabezados se distingan de las filas */
   font-size: 12px;
   font-weight: 700;
 }
@@ -304,14 +305,14 @@ select {
 /* La columna del simbolo queda angosta para no alargar la tabla */
 .col_accion {
   width: 52px;
-  text-align: center;
+  text-align: center; /* Centra el acceso a cada registro */
 }
 
 /* 6. Inicio del administrador */
 /* Estas tarjetas resumen las cifras principales del dia */
 .tarjetas {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* Reparte las cuatro cifras en una sola fila */
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -320,7 +321,7 @@ select {
   display: flex;
   align-items: center;
   gap: 14px;
-  min-height: 112px;
+  min-height: 112px; /* Mantiene parejas las tarjetas de indicadores */
   padding: 18px;
 }
 
@@ -336,7 +337,7 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: none;
+  flex: none; /* Evita que el círculo se encoja si falta espacio */
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -394,7 +395,7 @@ select {
 
 .campo {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Deja la etiqueta encima de su control */
   gap: 7px;
   min-width: 0;
 }
@@ -405,7 +406,7 @@ select {
 }
 
 .campo_texto {
-  width: 100%;
+  width: 100%; /* Aprovecha el ancho disponible en cada campo */
   height: 44px;
   padding: 0 12px;
   border: 1px solid var(--borde_campo);
@@ -423,7 +424,7 @@ select {
 
 .resumen {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* Muestra los dos totales uno al lado del otro */
   gap: 16px;
   margin-bottom: 20px;
 }
@@ -437,7 +438,7 @@ select {
 .paginacion {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end; /* Lleva los controles hasta el lado derecho */
   gap: 8px;
   padding: 18px 16px 20px;
 }
@@ -467,7 +468,7 @@ select {
 
 /* 9. DEVOLUCION */
 .pasos {
-  display: flex;
+  display: flex; /* Mantiene los pasos y la flecha en una misma fila */
   align-items: center;
   gap: 12px;
   margin-bottom: 18px;
@@ -525,7 +526,7 @@ select {
 
 .form_busqueda {
   display: grid;
-  grid-template-columns: 1.3fr 1fr auto;
+  grid-template-columns: 1.3fr 1fr auto; /* Reserva lugar para cada dato y el botón */
   align-items: end;
   gap: 14px;
   margin-bottom: 12px;
@@ -553,7 +554,7 @@ select {
 
 /* 10. COMPRA */
 .pestanas {
-  display: flex;
+  display: flex; /* Coloca las opciones de compra una junto a la otra */
   gap: 8px;
   margin-bottom: 18px;
 }
@@ -592,18 +593,18 @@ select {
 
 .form_encabezado {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* Alinea los cuatro datos de compra */
   gap: 14px;
 }
 
 .form_encabezado input[readonly] {
-  background: #EFE6DF;
+  background: #EFE6DF; /* Distingue los valores que no se pueden editar */
   color: var(--texto_suave);
 }
 
 .form_detalle {
   display: grid;
-  grid-template-columns: 1fr 1.4fr auto;
+  grid-template-columns: 1fr 1.4fr auto; /* Da más sitio al campo para buscar por nombre */
   align-items: end;
   gap: 14px;
   margin-bottom: 16px;
@@ -619,8 +620,19 @@ select {
   text-align: center;
 }
 
+.col_costo {
+  min-width: 130px;
+}
+
+.campo_costo {
+  width: 100px;
+  height: 36px;
+  padding: 0 8px;
+  text-align: right; /* Alinea el importe como los demás valores numéricos */
+}
+
 .control_cantidad {
-  display: inline-flex;
+  display: inline-flex; /* Deja los botones a los lados del número */
   align-items: center;
   gap: 8px;
 }
@@ -635,4 +647,352 @@ select {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* Ajustes generales de tablas, mensajes y totales */
+.oculto {
+  display: none;
+}
+
+.solo_lector {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.pie_tabla {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Separa el rango de resultados de la paginación */
+  gap: 16px;
+  padding: 0 16px;
+  color: var(--texto_suave);
+  font-size: 12px;
+}
+
+.pie_tabla .paginacion {
+  padding: 12px 0;
+}
+
+.boton_ok {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--pistache);
+  color: #24412F;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.boton_ok:hover {
+  background: #76B88D;
+}
+
+.barra_total {
+  display: flex; /* Deja el total a un lado y las acciones al otro */
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--borde);
+}
+
+.barra_total > p,
+.resumen_devolucion {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 600;
+}
+
+.acciones_total,
+.acciones_cabecera {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.barra_total .dato_grande,
+.total_rojo {
+  color: var(--rojo);
+}
+
+/* Devolucion: resumen de la venta y controles */
+.datos_venta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dato_item {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.dato_item > span {
+  color: var(--texto_suave);
+  font-size: 12px;
+}
+
+.dato_item strong {
+  font-size: 14px;
+}
+
+.tabla_devolucion .tabla {
+  min-width: 1200px;
+}
+
+.col_motivo {
+  min-width: 175px;
+}
+
+.nota_tabla {
+  padding: 0 16px;
+}
+
+.msj_error {
+  margin: 10px 16px 0;
+  color: var(--vino);
+  font-size: 13px;
+}
+
+/* Productos: filtros, lista y formulario */
+.cabecera_pagina {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.form_productos {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  align-items: end;
+  gap: 14px;
+}
+
+.form_productos .boton_prin {
+  height: 44px;
+}
+
+.form_reporte {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  align-items: end;
+  gap: 14px;
+}
+
+.mini_producto {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--durazno); /* Sirve de marcador mientras no haya imagen */
+}
+
+.exist_baja {
+  color: var(--vino);
+  font-weight: 600;
+}
+
+.chip_inactivo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  background: #F0E4E2;
+  color: #806966;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.form_producto {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr; /* Reserva más espacio para los datos que para la imagen */
+  align-items: start;
+  gap: 18px;
+}
+
+.panel_producto,
+.panel_imagen {
+  min-width: 0;
+  padding: 20px 22px;
+}
+
+.panel_producto .titulo_bloque,
+.panel_imagen .titulo_bloque {
+  margin-bottom: 16px;
+}
+
+.campos_producto {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Ordena los campos en dos columnas */
+  gap: 14px;
+}
+
+.campo_ancho {
+  grid-column: 1 / -1;
+}
+
+.campo_descripcion {
+  min-height: 100px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.vista_previa {
+  width: 100%;
+  max-width: 240px;
+  height: 240px;
+  margin: 0 auto 16px;
+  border: 1px dashed var(--borde_campo);
+  border-radius: 10px;
+  background: var(--durazno);
+}
+
+.campo_archivo {
+  height: auto;
+  min-height: 44px;
+  padding: 8px;
+}
+
+.panel_imagen .nota {
+  margin-top: 10px;
+}
+
+.acciones_form {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* Reportes */
+.pestanas_reportes {
+  flex-wrap: wrap;
+}
+
+.resumen_reportes {
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* Acomoda los tres indicadores en una fila */
+}
+
+.resumen_reportes .resumen_dato {
+  padding: 20px;
+}
+
+.cabecera_impresion,
+.pie_impresion {
+  display: none;
+}
+
+.nombre_negocio {
+  font-family: var(--fuente_titulo);
+  font-size: 22px;
+}
+
+.linea_firma {
+  width: 260px;
+  margin-top: 48px;
+  padding-top: 8px;
+  border-top: 1px solid var(--texto);
+  text-align: center;
+}
+
+/* Ajustes para tablet y celular */
+@media (max-width: 900px) {
+  .contenedor {
+    padding: 28px 24px 40px;
+  }
+
+  .encabezado {
+    padding: 12px 24px;
+  }
+
+  .tarjetas,
+  .resumen,
+  .resumen_reportes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .form_filtros,
+  .form_productos,
+  .form_reporte,
+  .form_busqueda,
+  .form_encabezado,
+  .form_detalle {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .form_producto {
+    grid-template-columns: 1fr; /* En tablet, apila los datos y la imagen */
+  }
+
+  .tabla_scroll {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .contenedor {
+    padding: 24px 16px 32px;
+  }
+
+  .encabezado {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .menu {
+    flex-basis: 100%; /* Reserva una fila completa para el menú en móvil */
+  }
+
+  .cuenta {
+    margin-left: 0;
+  }
+
+  .form_filtros,
+  .form_productos,
+  .form_reporte,
+  .form_busqueda,
+  .form_encabezado,
+  .form_detalle,
+  .campos_producto,
+  .datos_venta,
+  .resumen,
+  .resumen_reportes {
+    grid-template-columns: 1fr;
+  }
+
+  .campo_ancho {
+    grid-column: auto;
+  }
+
+  .cabecera_pagina,
+  .acciones_cabecera,
+  .pie_tabla,
+  .barra_total,
+  .resumen_devolucion {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .acciones_total,
+  .acciones_form {
+    flex-wrap: wrap; /* Permite acomodar los botones cuando falta espacio */
+  }
+}
+
 

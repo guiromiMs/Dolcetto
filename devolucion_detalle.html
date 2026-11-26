@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detalle de devolucion de Dolcetto">
+    <title>Detalle de devolución | Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio"><img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto"></a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion menu_activa" href="devolucion.html" aria-current="page">Devolución</a>
+            <a class="menu_opcion" href="compra.html">Compra</a>
+            <a class="menu_opcion" href="productos.html">Productos</a>
+            <a class="menu_opcion" href="reportes.html">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta"><span class="chip_usuario">admin · Administrador</span><a class="boton_sec" href="#">Cerrar sesión</a></div>
+    </header>
+    <main class="contenedor">
+        <section class="intro" aria-labelledby="titulo_devolucion">
+            <h1 class="titulo_pagina" id="titulo_devolucion">Devolución</h1>
+        </section>
+        <nav class="pasos" aria-label="Pasos de devolucion">
+            <a class="paso paso_inactivo" href="devolucion.html"><b>1</b> Buscar venta</a>
+            <span class="paso_flecha" aria-hidden="true">›</span>
+            <span class="paso paso_activo" aria-current="step"><b>2</b> Detalle y confirmación</span>
+        </nav>
+        <section class="tarjeta bloque_compra" aria-labelledby="titulo_venta">
+            <h2 class="titulo_bloque" id="titulo_venta">Venta seleccionada</h2>
+            <div class="datos_venta">
+                <div class="dato_item"><span>Folio</span><strong>V-000124</strong></div>
+                <div class="dato_item"><span>Fecha / hora</span><strong>2026-11-19 14:35</strong></div>
+                <div class="dato_item"><span>Cajero</span><strong>carlos</strong></div>
+                <div class="dato_item"><span>Total</span><strong class="total_rojo">$110.00</strong></div>
+            </div>
+        </section>
+        <section class="tarjeta bloque_tabla tabla_devolucion" aria-labelledby="titulo_productos">
+            <div class="bloque_titulo"><h2 class="titulo_bloque" id="titulo_productos">Productos a devolver</h2></div>
+            <div class="tabla_scroll">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th class="col_codigo" scope="col">Código</th>
+                            <th class="col_producto" scope="col">Producto</th>
+                            <th class="col_cantidad" scope="col">Vendido</th>
+                            <th class="col_cantidad" scope="col">Ya devuelto</th>
+                            <th class="col_cantidad" scope="col">Disponible</th>
+                            <th class="col_cantidad" scope="col">Cantidad a devolver</th>
+                            <th class="col_total al_derecha" scope="col">Importe ajustado</th>
+                            <th class="col_motivo" scope="col">Motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_devolucion">
+                        <!-- FILA DE EJEMPLO: JavaScript la repetirá por cada registro -->
+                        <tr>
+                            <td class="col_codigo">7501001</td>
+                            <td class="col_producto">Macarons</td>
+                            <td class="col_cantidad">1</td>
+                            <td class="col_cantidad">0</td>
+                            <td class="col_cantidad">1</td>
+                            <td class="col_cantidad">
+                                <div class="control_cantidad">
+                                    <button type="button" aria-label="Reducir cantidad">−</button>
+                                    <span>1</span>
+                                    <button type="button" aria-label="Aumentar cantidad">+</button>
+                                </div>
+                            </td>
+                            <td class="col_total al_derecha">$45.00</td>
+                            <td class="col_motivo">
+                                <label class="solo_lector" for="motivo_devolucion">Motivo de devolución</label>
+                                <select class="campo_texto" id="motivo_devolucion" name="motivo_devolucion">
+                                    <option>Producto dañado</option>
+                                    <option>Error de cobro</option>
+                                    <option>Producto equivocado</option>
+                                    <option>Otro</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="nota nota_tabla">La cantidad a devolver no puede superar lo disponible.</p>
+            <p class="msj_error oculto" id="msj_error">La cantidad supera lo vendido menos las devoluciones anteriores.</p>
+            <div class="barra_total">
+                <div class="resumen_devolucion">
+                    <p>Unidades a devolver <strong id="unidades_dev">1</strong></p>
+                    <p>Importe a devolver <span class="dato_grande">$<span id="importe_dev">45.00</span></span></p>
+                </div>
+                <div class="acciones_total">
+                    <a class="boton_sec" href="devolucion.html">Cancelar</a>
+                    <button class="boton_ok" type="button">Confirmar devolución</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

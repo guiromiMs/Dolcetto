@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catalogo de productos Dolcetto">
+    <title>Productos | Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio"><img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto"></a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion" href="devolucion.html">Devolución</a>
+            <a class="menu_opcion" href="compra.html">Compra</a>
+            <a class="menu_opcion menu_activa" href="productos.html" aria-current="page">Productos</a>
+            <a class="menu_opcion" href="reportes.html">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta"><span class="chip_usuario">admin · Administrador</span><a class="boton_sec" href="#">Cerrar sesión</a></div>
+    </header>
+    <main class="contenedor">
+        <section class="intro cabecera_pagina" aria-labelledby="titulo_productos">
+            <h1 class="titulo_pagina" id="titulo_productos">Productos</h1>
+            <a class="boton_prin" href="producto_form.html">Nuevo producto</a>
+        </section>
+        <section class="tarjeta filtros" aria-label="Filtros de productos">
+            <form class="form_productos">
+                <div class="campo">
+                    <label for="buscar_producto">Buscar por código o nombre</label>
+                    <input class="campo_texto" type="search" id="buscar_producto" name="buscar_producto" placeholder="Código o nombre del producto">
+                </div>
+                <div class="campo">
+                    <label for="sel_estado">Estado</label>
+                    <select class="campo_texto" id="sel_estado" name="sel_estado">
+                        <option>Todos</option><option>Activo</option><option>Inactivo</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="sel_existencia">Existencias</label>
+                    <select class="campo_texto" id="sel_existencia" name="sel_existencia">
+                        <option>Todas</option><option>Bajo</option><option>Agotado</option>
+                    </select>
+                </div>
+                <button class="boton_prin" type="submit">Aplicar</button>
+            </form>
+        </section>
+        <section class="tarjeta bloque_tabla" aria-label="Lista de productos">
+            <div class="tabla_scroll">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th class="col_imagen" scope="col">Imagen</th>
+                            <th class="col_codigo" scope="col">Código</th>
+                            <th class="col_producto" scope="col">Nombre</th>
+                            <th class="col_total al_derecha" scope="col">Precio</th>
+                            <th class="col_existencia" scope="col">Existencia</th>
+                            <th class="col_estado" scope="col">Estado</th>
+                            <th class="col_acciones" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_productos">
+                        <!-- FILA DE EJEMPLO: JavaScript la repetirá por cada registro -->
+                        <tr>
+                            <td class="col_imagen"><span class="mini_producto" aria-label="Sin imagen"></span></td>
+                            <td class="col_codigo">7501001</td>
+                            <td class="col_producto">Gomitas de Mango</td>
+                            <td class="col_total al_derecha">$45.00</td>
+                            <td class="col_existencia">20</td>
+                            <td class="col_estado"><span class="chip chip_ok">✓ Activo</span></td>
+                            <td class="col_acciones"><a class="enlace_accion" href="producto_form.html">Editar</a><span> · </span><a class="enlace_accion" href="#">Eliminar</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pie_tabla">
+                <span id="rango_mostrado">Mostrando 1–1 de 1</span>
+                <nav class="paginacion" id="paginacion" aria-label="Paginacion de productos">
+                    <a class="pag_boton" href="#" aria-label="Pagina anterior">‹</a>
+                    <span class="pag_actual" aria-current="page">1</span>
+                    <a class="pag_boton" href="#" aria-label="Pagina siguiente">›</a>
+                </nav>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
