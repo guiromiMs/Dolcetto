@@ -26,6 +26,10 @@
         <section class="intro" aria-labelledby="titulo_devolucion">
             <h1 class="titulo_pagina" id="titulo_devolucion">Devolución</h1>
         </section>
+        <nav class="pestanas" aria-label="Opciones de devolución">
+            <a class="pestana pestana_activa" href="devolucion.html" aria-current="page">Nueva devolución</a>
+            <a class="pestana pestana_secunda" href="devolucion_historial.html">Historial de devoluciones</a>
+        </nav>
         <nav class="pasos" aria-label="Pasos de devolucion">
             <a class="paso paso_inactivo" href="devolucion.html"><b>1</b> Buscar venta</a>
             <span class="paso_flecha" aria-hidden="true">›</span>
@@ -73,13 +77,15 @@
                             </td>
                             <td class="col_total al_derecha">$45.00</td>
                             <td class="col_motivo">
-                                <label class="solo_lector" for="motivo_devolucion">Motivo de devolución</label>
-                                <select class="campo_texto" id="motivo_devolucion" name="motivo_devolucion">
-                                    <option>Producto dañado</option>
-                                    <option>Error de cobro</option>
-                                    <option>Producto equivocado</option>
-                                    <option>Otro</option>
+                                <label class="solo_lector" for="sel_motivo">Motivo de devolución</label>
+                                <select class="campo_texto" id="sel_motivo" name="sel_motivo">
+                                    <option value="producto_danado">Producto dañado</option>
+                                    <option value="error_cobro">Error de cobro</option>
+                                    <option value="producto_equivocado">Producto equivocado</option>
+                                    <option value="otro">Otro</option>
                                 </select>
+                                <label class="solo_lector" for="motivo_otro">Escribe el motivo</label>
+                                <input class="campo_texto motivo_otro" type="text" id="motivo_otro" name="motivo_otro" placeholder="Escribe el motivo" maxlength="120">
                             </td>
                         </tr>
                     </tbody>
@@ -87,7 +93,7 @@
             </div>
             <p class="nota nota_tabla">La cantidad a devolver no puede superar lo disponible.</p>
             <p class="msj_error oculto" id="msj_error">La cantidad supera lo vendido menos las devoluciones anteriores.</p>
-            <div class="barra_total">
+            <div class="barra_total barra_pad">
                 <div class="resumen_devolucion">
                     <p>Unidades a devolver <strong id="unidades_dev">1</strong></p>
                     <p>Importe a devolver <span class="dato_grande">$<span id="importe_dev">45.00</span></span></p>
