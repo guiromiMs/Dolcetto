@@ -28,27 +28,27 @@ document.addEventListener("DOMContentLoaded", () => {
         return "chip_bajo";
     }
 
-    function actualizarSeccionProductos(productos) {
-        // Productos activos que sí tienen existencia (> 0)
-        const activosConExistencia = productos.filter(
-            (p) => p.estado === "activo" && Number(p.cantidad) > 0
-        );
+    function obtenerEnlaceMovimiento(mov, folioTexto) {
+        if (mov.tipo === "Venta") {
+            return `historial_ventas.html?folio=${encodeURIComponent(folioTexto)}`;
+        }
+        if (mov.tipo === "Compra") {
+            return "compra_historial.html";
+        }
+        return "devolucion_historial.html";
+    }
 
-        // Productos activos con stock bajo (<= 10 en existencia)
-        const productosStockBajo = productos.filter(
-            (p) => p.estado === "activo" && Number(p.cantidad) <= UMBRAL_STOCK_BAJO
-        );
-
-        spanProductosActivos.textContent = activosConExistencia.length;
-        spanAlertasStock.textContent = productosStockBajo.length;
-
-        renderizarInventarioBajo(productosStockBajo);
+    function renderizarIndicadores(indicadores) {
+        spanVentasHoy.textContent = formatoMoneda.format(Number(indicadores.ventasHoy || 0));
+        spanTicketsEmitidos.textContent = Number(indicadores.ticketsEmitidos || 0);
+        spanProductosActivos.textContent = Number(indicadores.productosActivos || 0);
+        spanAlertasStock.textContent = Number(indicadores.alertasStock || 0);
     }
 
     function renderizarInventarioBajo(listaBajo) {
         tbodyInvBajo.innerHTML = "";
 
-        if (listaBajo.length === 0) {
+        if (!listaBajo || listaBajo.length === 0) {
             tbodyInvBajo.innerHTML = `
                 <tr>
                     <td colspan="4" style="text-align: center; padding: 1.25rem;">
@@ -75,22 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function actualizarSeccionMovimientos(movimientos, fechaHoy) {
-        todosLosMovimientos = movimientos;
-
-        // Ventas del día actual
-        const ventasDeHoy = movimientos.filter(
-            (m) => m.tipo === "Venta" && m.fecha_hora.startsWith(fechaHoy)
-        );
-
-        const totalVentasHoy = ventasDeHoy.reduce((acum, v) => acum + Number(v.total), 0);
-
-        spanVentasHoy.textContent = formatoMoneda.format(totalVentasHoy);
-        spanTicketsEmitidos.textContent = ventasDeHoy.length;
-
-        renderizarMovimientos();
-    }
-
     function renderizarMovimientos() {
         tbodyMovimientos.innerHTML = "";
 
@@ -98,14 +82,13 @@ document.addEventListener("DOMContentLoaded", () => {
             tbodyMovimientos.innerHTML = `
                 <tr>
                     <td colspan="6" style="text-align: center; padding: 1.25rem;">
-                        Aún no hay movimientos registrados.
+                        Aún no hay movimientos registrados en la base de datos.
                     </td>
                 </tr>
             `;
             return;
         }
 
-        // Muestra los primeros 5 o todos al desplegar
         const listaVisible = mostrandoTodosMovimientos
             ? todosLosMovimientos
             : todosLosMovimientos.slice(0, LIMITE_MOVIMIENTOS_INICIAL);
@@ -120,21 +103,21 @@ document.addEventListener("DOMContentLoaded", () => {
             const tr = document.createElement("tr");
             const folioTexto = formatearFolio(mov.prefijo, mov.folio);
             const claseChip = obtenerClaseChipTipo(mov.tipo);
+            const urlDestino = obtenerEnlaceMovimiento(mov, folioTexto);
 
             tr.innerHTML = `
                 <td class="col_folio">${folioTexto}</td>
                 <td class="col_tipo"><span class="chip ${claseChip}">${mov.tipo}</span></td>
                 <td class="col_usuario">${mov.usuario}</td>
                 <td class="col_fecha">${mov.fecha_hora}</td>
-                <td class="col_total al_derecha">$${formatoMoneda.format(mov.total)}</td>
+                <td class="col_total al_derecha">$${formatoMoneda.format(Number(mov.total || 0))}</td>
                 <td class="col_accion">
-                    <a class="enlace_flecha" href="historial_ventas.html" aria-label="Ver detalle de ${folioTexto}">›</a>
+                    <a class="enlace_flecha" href="${urlDestino}" aria-label="Ver detalle de ${folioTexto}">›</a>
                 </td>
             `;
             tbodyMovimientos.appendChild(tr);
         });
 
-        // Control para deslizar y ver el resto si hay más de 5
         if (todosLosMovimientos.length > LIMITE_MOVIMIENTOS_INICIAL) {
             const trToggle = document.createElement("tr");
             const restantes = todosLosMovimientos.length - LIMITE_MOVIMIENTOS_INICIAL;
@@ -158,14 +141,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function inicializarInicio() {
-        const fechaHoy = InicioBDD.obtenerFechaHoyISO();
-        const [productos, movimientos] = await Promise.all([
-            InicioBDD.obtenerProductos(),
-            InicioBDD.obtenerMovimientos()
-        ]);
+        try {
+            const respuesta = await fetch(`/api/inicio?umbral=${UMBRAL_STOCK_BAJO}`);
+            const datos = await respuesta.json();
 
-        actualizarSeccionProductos(productos);
-        actualizarSeccionMovimientos(movimientos, fechaHoy);
+            if (!respuesta.ok || !datos.ok) {
+                throw new Error(datos.mensaje || "Error al consultar el servidor.");
+            }
+
+            renderizarIndicadores(datos.indicadores);
+            todosLosMovimientos = datos.movimientos || [];
+            renderizarMovimientos();
+            renderizarInventarioBajo(datos.inventarioBajo || []);
+        } catch (error) {
+            console.error("Error al inicializar inicio_admin:", error);
+            tbodyMovimientos.innerHTML = `
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 1.25rem; color: #b42318;">
+                        No se pudieron cargar los movimientos desde la base de datos.
+                    </td>
+                </tr>
+            `;
+            tbodyInvBajo.innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 1.25rem; color: #b42318;">
+                        No se pudo cargar el inventario bajo.
+                    </td>
+                </tr>
+            `;
+        }
     }
 
     inicializarInicio();

@@ -10,6 +10,11 @@ const {
   actualizarProducto
 } = require('./productos');
 
+//AGREGUÉ, GABRIELA TODO ESTE CONST
+const { obtenerResumenInicio } = require('./inicio_bdd');
+const { listarCajerosVentas, listarVentas } = require('./historial_ventas_bdd');
+//AGREGUÉ, GABRIELA
+
 const app = express();
 app.use(express.json());
 
@@ -116,8 +121,45 @@ app.get('/api/productos/:id/imagen', (req, res) => {
   res.send(fila.imagen);
 });
 
+/* QUITE TODO ESTO, GABRIELA
 app.get('/inicio_bdd.js', (req, res) => {
   res.sendFile(require('path').join(__dirname, 'inicio_bdd.js'));
 });
 
+
 app.listen(3000, () => console.log('Dolcetto en http://localhost:3000'));
+*/
+
+//PARA PONER TODO ESTO, GABRIELA
+// Resumen general para inicio_admin.html
+app.get('/api/inicio', (req, res) => {
+  try {
+    res.json(obtenerResumenInicio(req.query.umbral));
+  } catch (e) {
+    console.error('Error al cargar el resumen de inicio:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudo cargar el resumen de inicio.' });
+  }
+});
+
+// Lista de cajeros para el filtro de historial_ventas.html
+app.get('/api/ventas/cajeros', (req, res) => {
+  try {
+    res.json({ ok: true, cajeros: listarCajerosVentas() });
+  } catch (e) {
+    console.error('Error al listar cajeros:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudieron cargar los cajeros.' });
+  }
+});
+
+// Historial de ventas con filtros y paginacion
+app.get('/api/ventas', (req, res) => {
+  try {
+    res.json(listarVentas(req.query));
+  } catch (e) {
+    console.error('Error al listar ventas:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudieron consultar las ventas.' });
+  }
+});
+
+app.listen(3000, () => console.log('Dolcetto en http://localhost:3000'));
+//HASTA AQUI TODO ESTO NUEVO LE PUSE, GABRIELA

@@ -1,55 +1,104 @@
+const db = require('./db/conexion');
+
 /**
-    inicio_bdd.js
-    Capa de conexión / datos para inicio_admin.html
-    Cuando conecte server.js con SQLite, reemplazar el interior de estas funciones por fetch().
+ * Obtiene los indicadores principales, movimientos recientes (ventas, compras y devoluciones)
+ * y productos activos con stock bajo para inicio_admin.html.
  */
+function obtenerResumenInicio(umbralStockBajo = 10) {
+  const umbral = Number.isFinite(Number(umbralStockBajo)) ? Number(umbralStockBajo) : 10;
 
-const InicioBDD = (() => {
-    function obtenerFechaHoyISO() {
-        const hoy = new Date();
-        const anio = hoy.getFullYear();
-        const mes = String(hoy.getMonth() + 1).padStart(2, "0");
-        const dia = String(hoy.getDate()).padStart(2, "0");
-        return `${anio}-${mes}-${dia}`;
-    }
+  // 1. Indicadores de ventas de hoy (hora local de SQLite)
+  const filaVentasHoy = db
+    .prepare(
+      `SELECT
+         COALESCE(SUM(total), 0) AS total_hoy,
+         COUNT(*) AS tickets_hoy
+       FROM VENTAS
+       WHERE DATE(fecha_hora) = DATE('now', 'localtime')`
+    )
+    .get();
 
-    const HOY = obtenerFechaHoyISO();
+  // 2. Indicadores de productos activos y alertas de stock bajo
+  const filaProductos = db
+    .prepare(
+      `SELECT
+         COUNT(CASE WHEN LOWER(estado) = 'activo' AND cantidad > 0 THEN 1 END) AS activos,
+         COUNT(CASE WHEN LOWER(estado) = 'activo' AND cantidad <= ? THEN 1 END) AS stock_bajo
+       FROM PRODUCTOS`
+    )
+    .get(umbral);
 
-    // Simulación de tabla PRODUCTOS (codigo_consulta, nombre, precio, cantidad, estado)
-    const PRODUCTOS_BD = [
-        { id: 1, codigo_consulta: "DUL-0184", nombre: "Manguitos enchilados", precio: 25.00, cantidad: 4, estado: "activo" },
-        { id: 2, codigo_consulta: "7501001", nombre: "Gomitas de Mango", precio: 22.00, cantidad: 8, estado: "activo" },
-        { id: 3, codigo_consulta: "7501000000011", nombre: "Pastel Tres Leches", precio: 55.00, cantidad: 20, estado: "activo" },
-        { id: 4, codigo_consulta: "7501000000022", nombre: "Cheesecake", precio: 65.00, cantidad: 15, estado: "activo" },
-        { id: 5, codigo_consulta: "7501000000033", nombre: "Croissant", precio: 32.00, cantidad: 10, estado: "activo" },
-        { id: 6, codigo_consulta: "7501000000044", nombre: "Café Americano", precio: 38.00, cantidad: 50, estado: "activo" },
-        { id: 7, codigo_consulta: "7501000000055", nombre: "Capuchino", precio: 52.00, cantidad: 40, estado: "activo" },
-        { id: 8, codigo_consulta: "7501000000066", nombre: "Brownie", precio: 42.00, cantidad: 0, estado: "activo" },
-        { id: 9, codigo_consulta: "7501000000099", nombre: "Mazapán descontinuado", precio: 10.00, cantidad: 3, estado: "inactivo" }
-    ];
+  // 3. Lista de productos activos con stock bajo (<= umbral)
+  const inventarioBajo = db
+    .prepare(
+      `SELECT
+         id,
+         codigo_consulta,
+         nombre,
+         precio,
+         cantidad,
+         LOWER(estado) AS estado
+       FROM PRODUCTOS
+       WHERE LOWER(estado) = 'activo' AND cantidad <= ?
+       ORDER BY cantidad ASC, nombre ASC`
+    )
+    .all(umbral);
 
-    // Simulación de movimientos recientes (VENTAS, COMPRAS, DEVOLUCIONES)
-    const MOVIMIENTOS_BD = [
-        { folio: 42, prefijo: "V", tipo: "Venta", usuario: "Ana Lisa Meltrozo", fecha_hora: `${HOY} 09:18`, total: 1000.00 },
-        { folio: 41, prefijo: "V", tipo: "Venta", usuario: "Ana Lisa Meltrozo", fecha_hora: `${HOY} 08:45`, total: 2500.00 },
-        { folio: 31, prefijo: "C", tipo: "Compra", usuario: "Admin", fecha_hora: `${HOY} 08:15`, total: 140.00 },
-        { folio: 40, prefijo: "V", tipo: "Venta", usuario: "Admin", fecha_hora: `${HOY} 07:50`, total: 4500.00 },
-        { folio: 5, prefijo: "D", tipo: "Devolución", usuario: "Ana Lisa Meltrozo", fecha_hora: `${HOY} 07:30`, total: 110.00 },
-        { folio: 39, prefijo: "V", tipo: "Venta", usuario: "Ana Lisa Meltrozo", fecha_hora: "2026-11-25 18:10", total: 640.00 },
-        { folio: 38, prefijo: "V", tipo: "Venta", usuario: "Admin", fecha_hora: "2026-11-25 14:22", total: 320.00 }
-    ];
+  // 4. Movimientos recientes unificados (Ventas, Compras y Devoluciones)
+  const movimientos = db
+    .prepare(
+      `SELECT
+         v.folio AS folio,
+         'V' AS prefijo,
+         'Venta' AS tipo,
+         u.nombre_completo AS usuario,
+         v.fecha_hora AS fecha_hora,
+         v.total AS total
+       FROM VENTAS v
+       INNER JOIN USUARIOS u ON u.id = v.usuario_id
 
-    async function obtenerProductos() {
-        return PRODUCTOS_BD;
-    }
+       UNION ALL
 
-    async function obtenerMovimientos() {
-        return [...MOVIMIENTOS_BD].sort((a, b) => b.fecha_hora.localeCompare(a.fecha_hora));
-    }
+       SELECT
+         c.folio AS folio,
+         'C' AS prefijo,
+         'Compra' AS tipo,
+         u.nombre_completo AS usuario,
+         c.fecha_hora AS fecha_hora,
+         c.total AS total
+       FROM COMPRAS c
+       INNER JOIN USUARIOS u ON u.id = c.usuario_id
 
-    return {
-        obtenerFechaHoyISO,
-        obtenerProductos,
-        obtenerMovimientos
-    };
-})();
+       UNION ALL
+
+       SELECT
+         d.folio AS folio,
+         'D' AS prefijo,
+         'Devolución' AS tipo,
+         u.nombre_completo AS usuario,
+         d.fecha_hora AS fecha_hora,
+         d.total_devuelto AS total
+       FROM DEVOLUCIONES d
+       INNER JOIN USUARIOS u ON u.id = d.usuario_id
+
+       ORDER BY fecha_hora DESC, folio DESC
+       LIMIT 30`
+    )
+    .all();
+
+  return {
+    ok: true,
+    indicadores: {
+      ventasHoy: Number(filaVentasHoy.total_hoy || 0),
+      ticketsEmitidos: Number(filaVentasHoy.tickets_hoy || 0),
+      productosActivos: Number(filaProductos.activos || 0),
+      alertasStock: Number(filaProductos.stock_bajo || 0)
+    },
+    movimientos,
+    inventarioBajo
+  };
+}
+
+module.exports = {
+  obtenerResumenInicio
+};
