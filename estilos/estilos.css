@@ -446,11 +446,6 @@ select {
   width: 170px;
 }
 
-.form_filtros > .boton_prin {
-  margin-left: auto;
-  align-self: flex-end;
-}
-
 .campo {
   display: flex;
   flex-direction: column; /* Deja la etiqueta encima de su control */
@@ -1140,12 +1135,6 @@ body.pagina-login {
     flex: 1 1 auto;
     max-width: none;
     width: 100%;
-  }
-
-  .form_filtros > .boton_prin {
-    align-self: stretch;
-    width: 100%;
-    margin-left: 0;
   }
 
   .campo_ancho {
@@ -1877,5 +1866,23 @@ body.pagina-login {
 
   .pie_impresion {
     margin-top: 32px;
+  }
+}
+
+/* Agrupa las acciones del filtro a la derecha */
+.botones_filtro {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+  align-self: flex-end;
+}
+
+@media (max-width: 600px) {
+  .botones_filtro {
+    width: 100%;
+  }
+
+  .botones_filtro button {
+    flex: 1;
   }
 }
