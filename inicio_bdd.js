@@ -1,7 +1,7 @@
 /**
     inicio_bdd.js
     Capa de conexión / datos para inicio_admin.html
-    Cuando conectes server.js con SQLite, solo reemplazarás el interior de estas funciones por fetch().
+    Cuando conecte server.js con SQLite, reemplazar el interior de estas funciones por fetch().
  */
 
 const InicioBDD = (() => {

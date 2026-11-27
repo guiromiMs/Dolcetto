@@ -1,8 +1,3 @@
-/**
- * script/inicio_admin.js
- * Lógica de pantalla para inicio_admin.html
- */
-
 document.addEventListener("DOMContentLoaded", () => {
     const spanVentasHoy = document.getElementById("ventas_hoy");
     const spanTicketsEmitidos = document.getElementById("tickets_emitidos");
