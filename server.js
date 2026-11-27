@@ -27,4 +27,10 @@ app.post('/api/login', (req, res) => {
   res.status(resultado.ok ? 200 : 401).json(resultado);
 });
 
+/* const path = require("path"); BORRE GABRIELA*/
+
+app.get("/inicio_bdd.js", (req, res) => { /* EDITE GABRIELA*/
+    res.sendFile(path.join(__dirname, "inicio_bdd.js")); /* EDITE GABRIELA*/
+});
+
 app.listen(3000, () => console.log('Dolcetto en http://localhost:3000'));
