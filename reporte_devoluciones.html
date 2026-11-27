@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reporte de devoluciones por rango de Dolcetto">
+    <title>Devoluciones por rango | Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio"><img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto"></a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion" href="devolucion.html">Devolución</a>
+            <a class="menu_opcion" href="compra.html">Compra</a>
+            <a class="menu_opcion" href="productos.html">Productos</a>
+            <a class="menu_opcion menu_activa" href="reportes.html" aria-current="page">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta"><span class="chip_usuario">admin · Administrador</span><a class="boton_sec" href="#">Cerrar sesión</a></div>
+    </header>
+    <main class="contenedor">
+        <section class="cabecera_impresion" aria-label="Encabezado del reporte impreso">
+            <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
+            <p class="nombre_negocio">Dolcetto Dulcería</p>
+            <h2>Reporte de devoluciones por rango</h2>
+            <p>Filtros: 2026-11-19 a 2026-11-19 · Cajero: todos</p>
+            <p>Generado: 2026-11-19 15:30</p>
+        </section>
+        <section class="intro cabecera_pagina" aria-labelledby="titulo_reportes">
+            <div>
+                <h1 class="titulo_pagina" id="titulo_reportes">Reportes</h1>
+                <p class="subtitulo">Devoluciones por rango · 19 de noviembre de 2026</p>
+            </div>
+            <div class="acciones_cabecera">
+                <button class="boton_sec" id="btn_csv" type="button">Exportar CSV</button>
+                <button class="boton_sec" id="btn_imprimir" type="button">Imprimir</button>
+            </div>
+        </section>
+        <nav class="pestanas pestanas_reportes" aria-label="Tipos de reporte">
+            <a class="pestana pestana_secunda" href="reporte_inventario.html">Inventario actual</a>
+            <a class="pestana pestana_secunda" href="reporte_ventas.html">Ventas por rango</a>
+            <a class="pestana pestana_secunda" href="reporte_detalle.html">Detalle de ventas</a>
+            <a class="pestana pestana_secunda" href="reporte_compras.html">Compras por rango</a>
+            <a class="pestana pestana_activa" href="reporte_devoluciones.html" aria-current="page">Devoluciones por rango</a>
+            <a class="pestana pestana_secunda" href="reporte_cierre.html">Cierre de caja</a>
+            <a class="pestana pestana_secunda" href="reporte_mov.html">Movimientos por usuario</a>
+        </nav>
+        <section class="tarjeta filtros" aria-label="Filtros de devoluciones">
+            <form class="form_reporte">
+                <div class="campo">
+                    <label for="fecha_inicial">Fecha inicial</label>
+                    <input class="campo_texto" type="date" id="fecha_inicial" name="fecha_inicial" value="2026-11-19">
+                </div>
+                <div class="campo">
+                    <label for="fecha_final">Fecha final</label>
+                    <input class="campo_texto" type="date" id="fecha_final" name="fecha_final" value="2026-11-19">
+                </div>
+                <div class="campo">
+                    <label for="sel_cajero">Cajero (opcional)</label>
+                    <select class="campo_texto" id="sel_cajero" name="sel_cajero">
+                        <option value="">Todos los cajeros</option>
+                        <option value="admin">admin · Ana Martínez</option>
+                        <option value="clopez">clopez · Carlos López</option>
+                        <option value="mgarcia">mgarcia · María García</option>
+                    </select>
+                </div>
+                <button class="boton_prin" type="submit">Aplicar</button>
+            </form>
+        </section>
+        <section class="resumen resumen_reportes" aria-label="Resumen de devoluciones">
+            <article class="tarjeta resumen_dato">
+                <h2>Importe ajustado</h2>
+                <p class="dato_grande">$<span id="importe_ajustado">58.00</span></p>
+                <p class="nota">Devoluciones del periodo</p>
+            </article>
+            <article class="tarjeta resumen_dato">
+                <h2>Devoluciones</h2>
+                <p class="dato_grande"><span id="num_devs">2</span></p>
+                <p class="nota">Operaciones registradas</p>
+            </article>
+            <article class="tarjeta resumen_dato">
+                <h2>Unidades devueltas</h2>
+                <p class="dato_grande"><span id="unidades_dev">2</span></p>
+                <p class="nota">Unidades reintegradas</p>
+            </article>
+        </section>
+        <section class="tarjeta bloque_tabla" aria-labelledby="titulo_devoluciones">
+            <div class="bloque_titulo">
+                <h2 class="titulo_bloque" id="titulo_devoluciones">Devoluciones del periodo</h2>
+                <p class="nota nota_reporte">Importes en MXN</p>
+            </div>
+            <div class="tabla_scroll">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th class="col_fecha" scope="col">Fecha</th>
+                            <th class="col_folio" scope="col">Folio de venta</th>
+                            <th class="col_codigo" scope="col">Código</th>
+                            <th class="col_producto" scope="col">Nombre</th>
+                            <th class="col_cantidad al_derecha" scope="col">Cantidad</th>
+                            <th class="col_total al_derecha" scope="col">Importe ajustado</th>
+                            <th class="col_motivo" scope="col">Motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_reporte">
+                        <!-- FILA DE EJEMPLO: JavaScript la repetirá por cada registro -->
+                        <tr>
+                            <td class="col_fecha">2026-11-19</td>
+                            <td class="col_folio">V-000118</td>
+                            <td class="col_codigo">7501002</td>
+                            <td class="col_producto">Paletas de caramelo</td>
+                            <td class="col_cantidad al_derecha">1</td>
+                            <td class="col_total al_derecha imp_rojo">$20.00</td>
+                            <td class="col_motivo txt_rojo">Empaque dañado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pie_tabla">
+                <span id="rango_mostrado">Mostrando 1–1 de 1</span>
+                <nav class="paginacion" id="paginacion" aria-label="Paginacion del reporte">
+                    <a class="pag_boton" href="#" aria-label="Pagina anterior">‹</a>
+                    <span class="pag_actual" aria-current="page">1</span>
+                    <a class="pag_boton" href="#" aria-label="Pagina siguiente">›</a>
+                </nav>
+            </div>
+        </section>
+        <footer class="pie_impresion">
+            <p>Responsable: admin</p>
+            <div class="linea_firma">Firma o Vo. Bo.</div>
+        </footer>
+    </main>
+</body>
+</html>

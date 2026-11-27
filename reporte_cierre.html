@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cierre de caja de Dolcetto">
+    <title>Cierre de caja | Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio"><img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto"></a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion" href="devolucion.html">Devolución</a>
+            <a class="menu_opcion" href="compra.html">Compra</a>
+            <a class="menu_opcion" href="productos.html">Productos</a>
+            <a class="menu_opcion menu_activa" href="reportes.html" aria-current="page">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta"><span class="chip_usuario">admin · Administrador</span><a class="boton_sec" href="#">Cerrar sesión</a></div>
+    </header>
+    <main class="contenedor">
+        <section class="cabecera_impresion" aria-label="Encabezado del reporte impreso">
+            <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
+            <p class="nombre_negocio">Dolcetto Dulcería</p>
+            <h2>Cierre de caja</h2>
+            <p>Filtros: Fecha: 2026-11-19 (corte 00:00 a 23:59)</p>
+            <p>Generado: 2026-11-19 15:30</p>
+        </section>
+        <section class="intro cabecera_pagina" aria-labelledby="titulo_reportes">
+            <div>
+                <h1 class="titulo_pagina" id="titulo_reportes">Reportes</h1>
+                <p class="subtitulo">Cierre de caja · 19 de noviembre de 2026</p>
+            </div>
+            <div class="acciones_cabecera">
+                <button class="boton_sec" id="btn_csv" type="button">Exportar CSV</button>
+                <button class="boton_sec" id="btn_imprimir" type="button">Imprimir</button>
+            </div>
+        </section>
+        <nav class="pestanas pestanas_reportes" aria-label="Tipos de reporte">
+            <a class="pestana pestana_secunda" href="reporte_inventario.html">Inventario actual</a>
+            <a class="pestana pestana_secunda" href="reporte_ventas.html">Ventas por rango</a>
+            <a class="pestana pestana_secunda" href="reporte_detalle.html">Detalle de ventas</a>
+            <a class="pestana pestana_secunda" href="reporte_compras.html">Compras por rango</a>
+            <a class="pestana pestana_secunda" href="reporte_devoluciones.html">Devoluciones por rango</a>
+            <a class="pestana pestana_activa" href="reporte_cierre.html" aria-current="page">Cierre de caja</a>
+            <a class="pestana pestana_secunda" href="reporte_mov.html">Movimientos por usuario</a>
+        </nav>
+        <section class="tarjeta filtros" aria-label="Filtro del cierre">
+            <form class="form_reporte form_cierre">
+                <div class="campo">
+                    <label for="fecha_cierre">Fecha</label>
+                    <input class="campo_texto" type="date" id="fecha_cierre" name="fecha_cierre" value="2026-11-19">
+                </div>
+                <p class="nota_filtro">Corte del día · 00:00 a 23:59</p>
+                <button class="boton_prin" type="submit">Aplicar</button>
+            </form>
+        </section>
+        <section class="resumen resumen_reportes" aria-label="Resumen del cierre de caja">
+            <article class="tarjeta resumen_dato">
+                <h2>Ventas</h2>
+                <p class="dato_grande">$<span id="cierre_ventas">1,392.00</span></p>
+                <p class="nota">8 tickets · IVA incluido</p>
+            </article>
+            <article class="tarjeta resumen_dato">
+                <h2>Devoluciones</h2>
+                <p class="dato_grande imp_rojo">−$<span id="cierre_dev">58.00</span></p>
+                <p class="nota">2 devoluciones registradas</p>
+            </article>
+            <article class="tarjeta resumen_dato">
+                <h2>Total neto</h2>
+                <p class="dato_grande">$<span id="cierre_neto">1,334.00</span></p>
+                <p class="nota">Ventas menos devoluciones</p>
+            </article>
+        </section>
+        <section class="tarjeta bloque_tabla" aria-labelledby="titulo_desglose">
+            <div class="bloque_titulo">
+                <h2 class="titulo_bloque" id="titulo_desglose">Desglose por usuario</h2>
+                <p class="nota nota_reporte">Importes en MXN</p>
+            </div>
+            <div class="tabla_scroll">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th class="col_usuario" scope="col">Usuario</th>
+                            <th class="col_cantidad al_derecha" scope="col">Tickets</th>
+                            <th class="col_total al_derecha" scope="col">Ventas</th>
+                            <th class="col_total al_derecha" scope="col">Devoluciones</th>
+                            <th class="col_total al_derecha" scope="col">Total neto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_reporte">
+                        <!-- FILA DE EJEMPLO: JavaScript la repetirá por cada registro -->
+                        <tr>
+                            <td class="col_usuario">admin · Ana Martínez</td>
+                            <td class="col_cantidad al_derecha">3</td>
+                            <td class="col_total al_derecha">$667.00</td>
+                            <td class="col_total al_derecha imp_rojo">−$38.00</td>
+                            <td class="col_total al_derecha imp_rojo">$629.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pie_tabla">
+                <span id="rango_mostrado">Mostrando 1–1 de 1</span>
+                <nav class="paginacion" id="paginacion" aria-label="Paginacion del reporte">
+                    <a class="pag_boton" href="#" aria-label="Pagina anterior">‹</a>
+                    <span class="pag_actual" aria-current="page">1</span>
+                    <a class="pag_boton" href="#" aria-label="Pagina siguiente">›</a>
+                </nav>
+            </div>
+        </section>
+        <footer class="pie_impresion">
+            <p>Responsable: admin</p>
+            <div class="linea_firma">Firma o Vo. Bo.</div>
+        </footer>
+    </main>
+</body>
+</html>

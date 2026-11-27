@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Historial de devoluciones de Dolcetto">
+    <title>Historial de devoluciones | Dolcetto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio">
+            <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
+        </a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion menu_activa" href="devolucion.html" aria-current="page">Devolución</a>
+            <a class="menu_opcion" href="compra.html">Compra</a>
+            <a class="menu_opcion" href="productos.html">Productos</a>
+            <a class="menu_opcion" href="reportes.html">Reportes</a>
+            <a class="menu_opcion" href="#">Usuarios</a>
+        </nav>
+        <div class="cuenta">
+            <span class="chip_usuario">admin · Administrador</span>
+            <a class="boton_sec" href="#">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <section class="intro" aria-labelledby="titulo_devolucion">
+            <h1 class="titulo_pagina" id="titulo_devolucion">Devolución</h1>
+        </section>
+
+        <nav class="pestanas" aria-label="Opciones de devolución">
+            <a class="pestana pestana_secunda" href="devolucion.html">Nueva devolución</a>
+            <a class="pestana pestana_activa" href="devolucion_historial.html" aria-current="page">Historial de devoluciones</a>
+        </nav>
+
+        <section class="tarjeta filtros" aria-label="Filtros de devoluciones">
+            <h2 class="titulo_bloque">Filtrar devoluciones</h2>
+            <form id="form_filtros" class="form_filtros">
+                <div class="fila_filtro">
+                    <input class="chk_filtro" type="checkbox" id="chk_folio" name="chk_folio" value="1">
+                    <label for="chk_folio">Buscar por folio</label>
+                    <div class="campos_filtro">
+                        <div class="campo">
+                            <label for="buscar_folio">Folio de devolución o venta</label>
+                            <input class="campo_texto" type="search" id="buscar_folio" name="buscar_folio">
+                        </div>
+                    </div>
+                </div>
+                <div class="fila_filtro">
+                    <input class="chk_filtro" type="checkbox" id="chk_fecha" name="chk_fecha" value="1">
+                    <label for="chk_fecha">Buscar por fecha</label>
+                    <div class="campos_filtro">
+                        <div class="campo">
+                            <label for="fecha_inicial">Fecha inicial</label>
+                            <input class="campo_texto" type="date" id="fecha_inicial" name="fecha_inicial">
+                        </div>
+                        <div class="campo">
+                            <label for="fecha_final">Fecha final</label>
+                            <input class="campo_texto" type="date" id="fecha_final" name="fecha_final">
+                        </div>
+                    </div>
+                </div>
+                <div class="fila_filtro">
+                    <input class="chk_filtro" type="checkbox" id="chk_motivo" name="chk_motivo" value="1">
+                    <label for="chk_motivo">Filtrar por motivo</label>
+                    <div class="campos_filtro">
+                        <div class="campo">
+                            <label for="filtro_motivo">Motivo</label>
+                            <select class="campo_texto" id="filtro_motivo" name="filtro_motivo">
+                                <option value="">Todos los motivos</option>
+                                <option value="producto_danado">Producto dañado</option>
+                                <option value="error_cobro">Error de cobro</option>
+                                <option value="producto_equivocado">Producto equivocado</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="botones_filtro">
+                    <button type="reset" id="btn_limpiar" class="boton_sec">Limpiar filtros</button>
+                    <button type="submit" id="btn_aplicar" class="boton_prin">Aplicar</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="resumen" aria-label="Resumen de devoluciones">
+            <article class="tarjeta tarj_dato resumen_dato">
+                <div>
+                    <h2>Devoluciones registradas</h2>
+                    <p class="dato_grande"><span id="devs_registradas">1</span></p>
+                </div>
+            </article>
+            <article class="tarjeta tarj_dato resumen_dato">
+                <div>
+                    <h2>Importe devuelto</h2>
+                    <p class="dato_grande">$<span id="importe_devuelto">45.00</span></p>
+                </div>
+            </article>
+        </section>
+
+        <section class="tarjeta bloque_tabla" aria-labelledby="titulo_resultados">
+            <div class="bloque_titulo">
+                <h2 class="titulo_bloque" id="titulo_resultados">Devoluciones</h2>
+            </div>
+            <div class="tabla_scroll">
+                <table class="tabla">
+                    <thead>
+                        <tr>
+                            <th class="col_folio" scope="col">Folio de devolución</th>
+                            <th class="col_fecha" scope="col">Fecha y hora</th>
+                            <th class="col_folio" scope="col">Folio de venta</th>
+                            <th class="col_usuario" scope="col">Usuario</th>
+                            <th class="col_unidades al_derecha" scope="col">Unidades</th>
+                            <th class="col_total al_derecha" scope="col">Importe ajustado</th>
+                            <th class="col_motivo" scope="col">Motivo</th>
+                            <th class="col_acciones" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpo_devoluciones">
+                        <!-- FILA DE EJEMPLO: JavaScript la repetirá por cada registro -->
+                        <tr>
+                            <td class="col_folio">D-000012</td>
+                            <td class="col_fecha">2026-11-19 16:10</td>
+                            <td class="col_folio">V-000124</td>
+                            <td class="col_usuario">admin</td>
+                            <td class="col_unidades al_derecha">1</td>
+                            <td class="col_total al_derecha">$45.00</td>
+                            <td class="col_motivo">Producto dañado</td>
+                            <td class="col_acciones">
+                                <a class="enlace_accion" href="#">Ver detalle</a>
+                                <span> · </span>
+                                <a class="enlace_accion" href="#">Reimprimir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pie_tabla">
+                <span>Mostrando 1–1 de 1</span>
+                <nav class="paginacion" id="paginacion" aria-label="Paginacion de devoluciones">
+                    <a class="pag_boton" href="#" aria-label="Pagina anterior">‹</a>
+                    <span class="pag_actual" aria-current="page">1</span>
+                    <a class="pag_boton" href="#" aria-label="Pagina siguiente">›</a>
+                </nav>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
