@@ -2,7 +2,14 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const { validarInicioSesion } = require('./login');
-const { crearProducto, obtenerImagen } = require('./productos');
+const {
+  crearProducto,
+  obtenerImagen,
+  listarProductos,
+  obtenerProductoPorId,
+  actualizarProducto
+} = require('./productos');
+
 const app = express();
 app.use(express.json());
 
@@ -15,7 +22,7 @@ app.use('/estilos', express.static(path.join(__dirname, 'estilos')));
 app.use('/imagenes', express.static(path.join(__dirname, 'imagenes')));
 app.use('/script', express.static(path.join(__dirname, 'script')));
 
-// Pagina inicial (login)
+// Pagina inicial
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 // Demas paginas .html (cada una carga sus propios scripts desde su HTML)
@@ -33,9 +40,33 @@ app.post('/api/login', (req, res) => {
   res.status(resultado.ok ? 200 : 401).json(resultado);
 });
 
+// Listar productos con busqueda, filtros y paginacion
+app.get('/api/productos', (req, res) => {
+  try {
+    res.json(listarProductos(req.query));
+  } catch (e) {
+    console.error('Error al listar productos:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudieron consultar los productos.' });
+  }
+});
+
+// Obtener un producto por ID para editarlo
+app.get('/api/productos/:id', (req, res) => {
+  try {
+    const producto = obtenerProductoPorId(req.params.id);
+    if (!producto) {
+      return res.status(404).json({ ok: false, mensaje: 'Producto no encontrado.' });
+    }
+    res.json({ ok: true, producto });
+  } catch (e) {
+    console.error('Error al obtener el producto:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error interno al obtener el producto.' });
+  }
+});
+
 // Crear producto (formulario con imagen)
-// upload.single('imagen') toma el archivo enviado con el nombre "imagen" (ver script/producto_form.js)
-// y lo deja en req.file; los campos de texto quedan en req.body.
+// upload.single('imagen') toma el archivo enviado con el nombre "imagen"
+// y lo deja en req.file; los campos de texto quedan en req.body
 app.post('/api/productos', (req, res) => {
   upload.single('imagen')(req, res, (errorSubida) => {
     if (errorSubida) {
@@ -56,7 +87,28 @@ app.post('/api/productos', (req, res) => {
   });
 });
 
-// Mostrar la imagen BLOB de un producto, por ejemplo: /api/productos/7/imagen
+// Actualizar producto existente por ID
+app.put('/api/productos/:id', (req, res) => {
+  upload.single('imagen')(req, res, (errorSubida) => {
+    if (errorSubida) {
+      const mensaje =
+        errorSubida.code === 'LIMIT_FILE_SIZE'
+          ? 'La imagen no debe pesar más de 2 MB.'
+          : 'No se pudo leer la imagen.';
+      return res.status(400).json({ ok: false, mensaje, campo: 'imagen' });
+    }
+
+    try {
+      const resultado = actualizarProducto(req.params.id, req.body, req.file);
+      res.status(resultado.ok ? 200 : 400).json(resultado);
+    } catch (e) {
+      console.error('Error al actualizar el producto:', e);
+      res.status(500).json({ ok: false, mensaje: 'Error interno al actualizar el producto.' });
+    }
+  });
+});
+
+// Mostrar la imagen BLOB de un producto
 app.get('/api/productos/:id/imagen', (req, res) => {
   const fila = obtenerImagen(Number(req.params.id));
   if (!fila || !fila.imagen) return res.status(404).send('Sin imagen');
@@ -66,7 +118,6 @@ app.get('/api/productos/:id/imagen', (req, res) => {
 
 app.get('/inicio_bdd.js', (req, res) => {
   res.sendFile(require('path').join(__dirname, 'inicio_bdd.js'));
-
 });
 
 app.listen(3000, () => console.log('Dolcetto en http://localhost:3000'));

@@ -18,14 +18,14 @@ function quitarMensaje() {
 }
 
 // El mensaje desaparece cuando el usuario vuelve a escribir
-document.getElementById('correo').addEventListener('input', quitarMensaje);
+document.getElementById('usuario').addEventListener('input', quitarMensaje);
 document.getElementById('contrasena').addEventListener('input', quitarMensaje);
 
 formulario.addEventListener('submit', async (evento) => {
   evento.preventDefault(); // evita que el formulario recargue la página
   quitarMensaje();
 
-  const usuario = document.getElementById('correo').value;
+  const usuario = document.getElementById('usuario').value;
   const password = document.getElementById('contrasena').value;
 
   try {

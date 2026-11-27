@@ -5,6 +5,9 @@ const formFiltros = document.querySelector('.form_productos');
 const campoBuscar = document.getElementById('buscar_producto');
 const selEstado = document.getElementById('sel_estado');
 const selExistencia = document.getElementById('sel_existencia');
+const chkBuscar = document.getElementById('chk_buscar');
+const chkEstado = document.getElementById('chk_estado');
+const chkExistencia = document.getElementById('chk_existencia');
 
 let paginaActual = 1;
 
@@ -25,7 +28,7 @@ function formatoPrecio(valor) {
 function filaProducto(p) {
   const fila = document.createElement('tr');
 
-  // Imagen: se pide aparte al servidor (/api/productos/:id/imagen)
+  // Imagen: se pide aparte al servidor
   const celdaImagen = crear('td', 'col_imagen');
   const miniatura = crear('span', 'mini_producto');
   if (p.tiene_imagen) {
@@ -52,14 +55,11 @@ function filaProducto(p) {
   const celdaEstado = crear('td', 'col_estado');
   celdaEstado.appendChild(crear('span', activo ? 'chip chip_ok' : 'chip', activo ? '✓ Activo' : 'Inactivo'));
 
-  // Acciones (Editar y Eliminar se conectan en el siguiente paso)
+  // Acción editar
   const celdaAcciones = crear('td', 'col_acciones');
   const editar = crear('a', 'enlace_accion', 'Editar');
   editar.href = 'producto_form.html?id=' + p.id;
-  const eliminar = crear('a', 'enlace_accion', 'Eliminar');
-  eliminar.href = '#';
-  eliminar.dataset.id = p.id;
-  celdaAcciones.append(editar, crear('span', '', ' · '), eliminar);
+  celdaAcciones.append(editar);
 
   fila.append(
     celdaImagen,
@@ -112,12 +112,16 @@ function dibujarPaginacion(pagina, totalPaginas) {
   paginacion.appendChild(botonPagina('›', pagina + 1, 'Pagina siguiente', pagina === totalPaginas));
 }
 
-// Pide los productos al servidor con los filtros actuales y dibuja la tabla
+// Pide los productos al servidor con los filtros activos y dibuja la tabla
 async function cargarProductos() {
+  const busquedaActiva = chkBuscar && chkBuscar.checked ? campoBuscar.value.trim() : '';
+  const estadoActivo = chkEstado && chkEstado.checked ? selEstado.value : 'Todos';
+  const existenciaActiva = chkExistencia && chkExistencia.checked ? selExistencia.value : 'Todas';
+
   const parametros = new URLSearchParams({
-    busqueda: campoBuscar.value.trim(),
-    estado: selEstado.value,
-    existencia: selExistencia.value,
+    busqueda: busquedaActiva,
+    estado: estadoActivo,
+    existencia: existenciaActiva,
     pagina: paginaActual
   });
 
@@ -144,11 +148,36 @@ async function cargarProductos() {
   }
 }
 
-// Botón "Aplicar": vuelve a la página 1 con los filtros nuevos
+// Si el usuario escribe o cambia un select, marca automáticamente su checkbox correspondiente
+if (campoBuscar && chkBuscar) {
+  campoBuscar.addEventListener('input', () => {
+    if (campoBuscar.value.trim() !== '') chkBuscar.checked = true;
+  });
+}
+if (selEstado && chkEstado) {
+  selEstado.addEventListener('change', () => {
+    chkEstado.checked = true;
+  });
+}
+if (selExistencia && chkExistencia) {
+  selExistencia.addEventListener('change', () => {
+    chkExistencia.checked = true;
+  });
+}
+
+// Botón "Aplicar": vuelve a la página 1 con los filtros activos
 formFiltros.addEventListener('submit', (evento) => {
   evento.preventDefault();
   paginaActual = 1;
   cargarProductos();
+});
+
+// Botón "Limpiar filtros": restablece campos y recarga todos los productos
+formFiltros.addEventListener('reset', () => {
+  setTimeout(() => {
+    paginaActual = 1;
+    cargarProductos();
+  }, 0);
 });
 
 // Clics en la paginación
