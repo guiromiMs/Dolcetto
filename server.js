@@ -64,4 +64,9 @@ app.get('/api/productos/:id/imagen', (req, res) => {
   res.send(fila.imagen);
 });
 
+app.get('/inicio_bdd.js', (req, res) => {
+  res.sendFile(require('path').join(__dirname, 'inicio_bdd.js'));
+
+});
+
 app.listen(3000, () => console.log('Dolcetto en http://localhost:3000'));
