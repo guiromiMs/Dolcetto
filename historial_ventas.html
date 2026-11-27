@@ -42,26 +42,49 @@
         <section class="tarjeta filtros" aria-label="Filtros de ventas">
             <h2 class="titulo_bloque">Filtrar ventas</h2>
             <form id="form_filtros" class="form_filtros">
-                <div class="campo">
-                    <label for="buscar_folio">Buscar por folio</label>
-                    <input class="campo_texto" type="search" id="buscar_folio" name="buscar_folio" placeholder="Ej. V-0042">
+                <div class="fila_filtro">
+                    <input class="chk_filtro" type="checkbox" id="chk_folio" name="chk_folio" value="1">
+                    <label for="chk_folio">Buscar por folio</label>
+                    <div class="campos_filtro">
+                        <div class="campo">
+                            <label for="buscar_folio">Folio</label>
+                            <input class="campo_texto" type="search" id="buscar_folio" name="buscar_folio" placeholder="Ej. V-0042">
+                        </div>
+                    </div>
                 </div>
-                <div class="campo">
-                    <label for="fecha_inicial">Fecha inicial</label>
-                    <input class="campo_texto" type="date" id="fecha_inicial" name="fecha_inicial">
+
+                <div class="fila_filtro">
+                    <input class="chk_filtro" type="checkbox" id="chk_fecha" name="chk_fecha" value="1">
+                    <label for="chk_fecha">Buscar por fecha</label>
+                    <div class="campos_filtro">
+                        <div class="campo">
+                            <label for="fecha_inicial">Fecha inicial</label>
+                            <input class="campo_texto" type="date" id="fecha_inicial" name="fecha_inicial">
+                        </div>
+                        <div class="campo">
+                            <label for="fecha_final">Fecha final</label>
+                            <input class="campo_texto" type="date" id="fecha_final" name="fecha_final">
+                        </div>
+                    </div>
                 </div>
-                <div class="campo">
-                    <label for="fecha_final">Fecha final</label>
-                    <input class="campo_texto" type="date" id="fecha_final" name="fecha_final">
+
+                <div class="fila_filtro">
+                    <input class="chk_filtro" type="checkbox" id="chk_cajero" name="chk_cajero" value="1">
+                    <label for="chk_cajero">Filtrar por cajero</label>
+                    <div class="campos_filtro">
+                        <div class="campo">
+                            <label for="sel_cajero">Cajero</label>
+                            <select class="campo_texto" id="sel_cajero" name="sel_cajero">
+                                <option value="">Todos los cajeros</option>
+                                <option value="carlos">carlos</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="campo">
-                    <label for="sel_cajero">Cajero</label>
-                    <select class="campo_texto" id="sel_cajero" name="sel_cajero">
-                        <option value="">Todos los cajeros</option>
-                        <option value="ana-garcia">Ana Lisa Meltrozo</option>
-                    </select>
+                <div class="botones_filtro">
+                    <button type="reset" id="btn_limpiar" class="boton_sec">Limpiar filtros</button>
+                    <button type="submit" id="btn_aplicar" class="boton_prin">Aplicar</button>
                 </div>
-                <button class="boton_prin" type="submit">Aplicar</button>
             </form>
         </section>
 
