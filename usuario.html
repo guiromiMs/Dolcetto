@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usuarios | Dolcetto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="estilos/estilos.css">
+  <script src="script/sesion.js" defer></script>
+</head>
+<body>
+
+<header class="encabezado">
+        <a href="inicio_admin.html" aria-label="Dolcetto, inicio">
+            <img class="logo" src="imagenes/logo-dolcetto-md.svg" alt="Dolcetto">
+        </a>
+        <nav class="menu" aria-label="Navegacion principal">
+            <a class="menu_opcion" href="inicio_admin.html">Inicio</a>
+            <a class="menu_opcion" href="historial_ventas.html">Venta</a>
+            <a class="menu_opcion" href="devolucion.html">Devolución</a>
+            <a class="menu_opcion" href="compra.html">Compra</a>
+            <a class="menu_opcion" href="productos.html">Productos</a>
+            <a class="menu_opcion" href="reportes.html">Reportes</a>
+            <a class="menu_opcion menu_activa" href="usuario.html" aria-current="page">Usuarios</a>
+        </nav>
+        <div class="cuenta">
+            <span class="chip_usuario">admin · Administrador</span>
+            <a class="boton_sec" href="#">Cerrar sesión</a>
+        </div>
+    </header>
+
+  <main class="dol_contenedor">
+    
+    <h1>Gestión de Usuarios</h1>
+
+    <div class="usuarios-tarjeta">
+      <h2 class="usuarios-titulo">Agregar nuevo usuario</h2>
+      
+      <form class="usuarios-formulario" action="#" method="POST">
+        <div class="dol_campo">
+          <label for="nuevo-usuario">Nombre de usuario</label>
+          <input type="text" id="nuevo-usuario" class="input-texto" placeholder="Nombre de usuario">
+        </div>
+
+        <div class="dol_campo">
+          <label for="nueva-contrasena">Contraseña</label>
+          <input type="password" id="nueva-contrasena" class="input-texto" placeholder="Escribe la contraseña">
+        </div>
+
+        <button type="#" class="btn-primario">Guardar</button>
+        <button type="reset" class="btn-secundario">Limpiar</button>
+      </form>
+
+      <span class="usuarios-nota">Registra las credenciales de acceso para los operadores del punto de venta.</span>
+    </div>
+
+    <div class="usuarios-tarjeta">
+    
+      <div class="usuarios-cabecera-tabla">
+        <h2 class="usuarios-titulo">Usuarios registrados</h2>
+        <span class="chip-conteo">1 usuarios</span>
+      </div>
+      <table class="usuarios-tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Contraseña</th>
+            <th class="col-acciones">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+          <tr>
+            <td>1</td>
+            <td>admin</td>
+            <td>admin123</td>
+            <td class="col-acciones">
+              <div class="usuarios-acciones">
+                <button class="btn-tabla-editar" title="Editar">
+                    <img src="imagenes/lapiz.png" alt="Editar" class="icono_btn">
+                </button>
+                <button class="btn-tabla-eliminar">Eliminar</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+</main>
+
+</body>
+</html>
