@@ -13,6 +13,12 @@ const {
 //AGREGUÉ, GABRIELA TODO ESTE CONST
 const { obtenerResumenInicio } = require('./inicio_bdd');
 const { listarCajerosVentas, listarVentas } = require('./historial_ventas_bdd');
+const {
+  listarUsuarios,
+  crearUsuario,
+  actualizarUsuario,
+  eliminarUsuario
+} = require('./usuarios_bdd');
 //AGREGUÉ, GABRIELA
 
 const app = express();
@@ -158,6 +164,46 @@ app.get('/api/ventas', (req, res) => {
   } catch (e) {
     console.error('Error al listar ventas:', e);
     res.status(500).json({ ok: false, mensaje: 'No se pudieron consultar las ventas.' });
+  }
+});
+
+// Gestion de usuarios (conectado a usuarios_bdd.js)
+app.get('/api/usuarios', (req, res) => {
+  try {
+    res.json({ ok: true, usuarios: listarUsuarios() });
+  } catch (e) {
+    console.error('Error al listar usuarios:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudieron consultar los usuarios.' });
+  }
+});
+
+app.post('/api/usuarios', (req, res) => {
+  try {
+    const resultado = crearUsuario(req.body);
+    res.status(resultado.ok ? 201 : 400).json(resultado);
+  } catch (e) {
+    console.error('Error al crear usuario:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error interno al guardar el usuario.' });
+  }
+});
+
+app.put('/api/usuarios/:id', (req, res) => {
+  try {
+    const resultado = actualizarUsuario(req.params.id, req.body);
+    res.status(resultado.ok ? 200 : 400).json(resultado);
+  } catch (e) {
+    console.error('Error al actualizar usuario:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error interno al actualizar el usuario.' });
+  }
+});
+
+app.delete('/api/usuarios/:id', (req, res) => {
+  try {
+    const resultado = eliminarUsuario(req.params.id);
+    res.status(resultado.ok ? 200 : 400).json(resultado);
+  } catch (e) {
+    console.error('Error al eliminar usuario:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error interno al eliminar el usuario.' });
   }
 });
 
