@@ -19,6 +19,11 @@ const {
   actualizarUsuario,
   eliminarUsuario
 } = require('./usuarios_bdd');
+const {
+  listarProductosParaVenta,
+  buscarProductoPorCodigo,
+  registrarVenta
+} = require('./venta_operador_bdd');
 //AGREGUÉ, GABRIELA
 
 const app = express();
@@ -204,6 +209,39 @@ app.delete('/api/usuarios/:id', (req, res) => {
   } catch (e) {
     console.error('Error al eliminar usuario:', e);
     res.status(500).json({ ok: false, mensaje: 'Error interno al eliminar el usuario.' });
+  }
+});
+
+// Pantalla Venta Operador (conectado a venta_operador_bdd.js)
+app.get('/api/venta-operador/productos', (req, res) => {
+  try {
+    res.json({ ok: true, productos: listarProductosParaVenta(req.query.q) });
+  } catch (e) {
+    console.error('Error al listar productos para venta:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudieron cargar los productos.' });
+  }
+});
+
+app.get('/api/venta-operador/codigo/:codigo', (req, res) => {
+  try {
+    const producto = buscarProductoPorCodigo(req.params.codigo);
+    if (!producto) {
+      return res.status(404).json({ ok: false, mensaje: 'Código no encontrado o producto inactivo.' });
+    }
+    res.json({ ok: true, producto });
+  } catch (e) {
+    console.error('Error al buscar código:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error al consultar el código.' });
+  }
+});
+
+app.post('/api/venta-operador/cobrar', (req, res) => {
+  try {
+    const resultado = registrarVenta(req.body);
+    res.status(resultado.ok ? 201 : 400).json(resultado);
+  } catch (e) {
+    console.error('Error al registrar venta:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error interno al registrar la venta.' });
   }
 });
 
