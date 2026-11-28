@@ -1,14 +1,9 @@
 const db = require('./db/conexion');
 const ESTADOS_VALIDOS = ['activo', 'inactivo'];
 const POR_PAGINA = 10;
-const UMBRAL_EXISTENCIA_BAJA = 5;
+const UMBRAL_EXISTENCIA_BAJA = 10;
 
-/**
- * Detecta el tipo real de la imagen leyendo sus primeros bytes.
- * No se confía en el tipo que declara el navegador, porque se puede falsificar.
- * @param {Buffer} buffer
- * @returns {'image/jpeg' | 'image/png' | null}
- */
+// Revisa los primeros bytes del archivo para saber si es JPG o PNG (no se confía en la extensión)
 function detectarTipoImagen(buffer) {
   if (buffer.length > 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
     return 'image/jpeg';
@@ -24,11 +19,7 @@ function error(mensaje, campo) {
   return { ok: false, mensaje, campo: campo || null };
 }
 
-/**
- * Valida y guarda un producto nuevo (con su imagen) en SQLite.
- * @param {object} datos   Campos de texto del formulario: codigo, nombre, precio, estado, descripcion
- * @param {object} archivo Archivo de multer (req.file) con .buffer
- */
+//Valida y guarda un producto nuevo (con su imagen) en SQLite.
 function crearProducto(datos, archivo) {
   const codigo = String(datos.codigo || '').trim();
   const nombre = String(datos.nombre || '').trim();
@@ -49,11 +40,13 @@ function crearProducto(datos, archivo) {
   const tipoImagen = detectarTipoImagen(archivo.buffer);
   if (!tipoImagen) return error('La imagen debe ser JPG o PNG.', 'imagen');
 
-  // El código de barras no puede repetirse
+  // El código de barras o nombre no puede repetirse
   const existente = db.prepare('SELECT id FROM PRODUCTOS WHERE codigo_consulta = ?').get(codigo);
-  if (existente) return error('Ya existe un producto con ese código.', 'codigo');
+  if (existente) return error('Ya existe un producto con ese código', 'codigo');
 
-  //Guardar. El producto nace con existencia 0
+ const existenteNombre = db.prepare('SELECT id FROM PRODUCTOS WHERE LOWER(nombre) = LOWER(?)').get(nombre);
+  if (existenteNombre) return error('Ya existe un producto con ese nombre.', 'nombre');
+  //El producto nace con existencia 0
   try {
     const resultado = db
       .prepare(
@@ -148,7 +141,7 @@ function listarProductos(filtros = {}) {
       cantidad,
       estado: String(fila.estado || '').toLowerCase(),
       tiene_imagen: Boolean(fila.tiene_imagen),
-      existencia_baja: cantidad > 0 && cantidad <= UMBRAL_EXISTENCIA_BAJA
+      existencia_baja: cantidad <= UMBRAL_EXISTENCIA_BAJA
     };
   });
 
@@ -221,8 +214,11 @@ function actualizarProducto(id, datos, archivo) {
   const repetido = db
     .prepare('SELECT id FROM PRODUCTOS WHERE codigo_consulta = ? AND id != ?')
     .get(codigo, numeroId);
-  if (repetido) return error('Ya existe otro producto con ese código.', 'codigo');
-
+  if (repetido) return error('Ya existe otro producto con ese código', 'codigo');
+  const nombreRepetido = db
+    .prepare('SELECT id FROM PRODUCTOS WHERE LOWER(nombre) = LOWER(?) AND id != ?')
+    .get(nombre, numeroId);
+  if (nombreRepetido) return error('Ya existe otro producto con ese nombre', 'nombre');
   let tipoImagen = null;
   if (archivo) {
     tipoImagen = detectarTipoImagen(archivo.buffer);

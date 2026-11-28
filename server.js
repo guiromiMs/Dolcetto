@@ -9,7 +9,7 @@ const {
   obtenerProductoPorId,
   actualizarProducto
 } = require('./productos');
-
+const compras = require('./compras');
 //AGREGUÉ, GABRIELA TODO ESTE CONST
 const { obtenerResumenInicio } = require('./inicio_bdd');
 const { listarCajerosVentas, listarVentas } = require('./historial_ventas_bdd');
@@ -279,6 +279,78 @@ app.post('/api/devoluciones', (req, res) => {
     res.status(500).json({ ok: false, mensaje: 'Error interno al registrar la devolucion.' });
   }
 });
+// ---------- Compras (compras.js) ----------
 
+// Folio que tendra la siguiente compra (solo se muestra; el real lo asigna SQLite al guardar)
+app.get('/api/compras/siguiente-folio', (req, res) => {
+  try {
+    res.json(compras.siguienteFolio());
+  } catch (e) {
+    console.error('Error al calcular el folio:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudo calcular el folio.' });
+  }
+});
+
+// Buscar un producto por codigo exacto (lector de codigos)
+app.get('/api/compras/producto', (req, res) => {
+  try {
+    const resultado = compras.buscarProductoPorCodigo(req.query.codigo);
+    res.status(resultado.ok ? 200 : resultado.status).json(resultado);
+  } catch (e) {
+    console.error('Error al buscar el producto:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error interno al buscar el producto.' });
+  }
+});
+
+// Sugerencias de productos por nombre o codigo (maximo 8)
+app.get('/api/compras/productos', (req, res) => {
+  try {
+    res.json(compras.buscarProductos(req.query.busqueda));
+  } catch (e) {
+    console.error('Error al buscar productos:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error interno al buscar productos.' });
+  }
+});
+
+// Registrar compra: encabezado + detalle + existencias, todo en una sola transaccion
+app.post('/api/compras', (req, res) => {
+  try {
+    const resultado = compras.registrarCompra(req.body);
+    res.status(resultado.ok ? 201 : resultado.status).json(resultado);
+  } catch (e) {
+    console.error('Error al registrar la compra:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error interno al registrar la compra.' });
+  }
+});
+// Listar compras con filtros y paginacion para el historial
+app.get('/api/compras', (req, res) => {
+  try {
+    const resultado = compras.listarCompras(req.query);
+    res.status(resultado.ok ? 200 : resultado.status || 400).json(resultado);
+  } catch (e) {
+    console.error('Error al listar compras:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudieron consultar las compras.' });
+  }
+});
+
+// Lista de proveedores distintos para el filtro del historial
+app.get('/api/compras/proveedores', (req, res) => {
+  try {
+    res.json(compras.listarProveedores());
+  } catch (e) {
+    console.error('Error al listar proveedores:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudieron cargar los proveedores.' });
+  }
+});
+
+// Detalle de una compra por folio ("Ver detalle")
+app.get('/api/compras/:folio', (req, res) => {
+  try {
+    const resultado = compras.obtenerDetalleCompra(req.params.folio);
+    res.status(resultado.ok ? 200 : resultado.status || 404).json(resultado);
+  } catch (e) {
+    console.error('Error al obtener detalle de compra:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudo obtener el detalle de la compra.' });
+  }
+});
 app.listen(3000, () => console.log('Dolcetto en http://localhost:3000'));
-//HASTA AQUI TODO ESTO NUEVO LE PUSE, GABRIELA
