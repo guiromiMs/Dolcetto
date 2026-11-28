@@ -24,6 +24,11 @@ const {
   buscarProductoPorCodigo,
   registrarVenta
 } = require('./venta_operador_bdd');
+const {
+  buscarVentasParaDevolucion,
+  obtenerDetalleVentaDevolucion,
+  registrarDevolucion
+} = require('./devolucion_operador_bdd');
 //AGREGUÉ, GABRIELA
 
 const app = express();
@@ -242,6 +247,36 @@ app.post('/api/venta-operador/cobrar', (req, res) => {
   } catch (e) {
     console.error('Error al registrar venta:', e);
     res.status(500).json({ ok: false, mensaje: 'Error interno al registrar la venta.' });
+  }
+});
+
+// Pantalla Devolucion Operador (conectado a devolucion_operador_bdd.js)
+app.get('/api/devoluciones/ventas', (req, res) => {
+  try {
+    res.json(buscarVentasParaDevolucion(req.query));
+  } catch (e) {
+    console.error('Error al buscar ventas para devolucion:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudieron consultar las ventas.' });
+  }
+});
+
+app.get('/api/devoluciones/venta/:folio', (req, res) => {
+  try {
+    const resultado = obtenerDetalleVentaDevolucion(req.params.folio);
+    res.status(resultado.ok ? 200 : 404).json(resultado);
+  } catch (e) {
+    console.error('Error al obtener detalle de venta:', e);
+    res.status(500).json({ ok: false, mensaje: 'No se pudo obtener el detalle de la venta.' });
+  }
+});
+
+app.post('/api/devoluciones', (req, res) => {
+  try {
+    const resultado = registrarDevolucion(req.body);
+    res.status(resultado.ok ? 201 : 400).json(resultado);
+  } catch (e) {
+    console.error('Error al registrar devolucion:', e);
+    res.status(500).json({ ok: false, mensaje: 'Error interno al registrar la devolucion.' });
   }
 });
 

@@ -69,12 +69,20 @@ function listarVentas(filtros = {}) {
 
   const whereSql = condiciones.length > 0 ? `WHERE ${condiciones.join(' AND ')}` : '';
 
-  // Totales globales de la búsqueda filtrada para las tarjetas superiores
+  // Totales globales de la búsqueda filtrada descontando devoluciones vinculadas
   const filaResumen = db
     .prepare(
       `SELECT
          COUNT(*) AS total_ventas,
-         COALESCE(SUM(v.total), 0) AS total_facturado
+         COALESCE(
+           SUM(
+             v.total - COALESCE(
+               (SELECT SUM(dev.total_devuelto) FROM DEVOLUCIONES dev WHERE dev.venta_folio = v.folio),
+               0
+             )
+           ),
+           0
+         ) AS total_facturado
        FROM VENTAS v
        INNER JOIN USUARIOS u ON u.id = v.usuario_id
        ${whereSql}`
@@ -82,7 +90,7 @@ function listarVentas(filtros = {}) {
     .get(...parametros);
 
   const total = Number(filaResumen ? filaResumen.total_ventas : 0);
-  const totalFacturado = Number(filaResumen ? filaResumen.total_facturado : 0);
+  const totalFacturado = Number(Math.max(0, Number(filaResumen ? filaResumen.total_facturado : 0)).toFixed(2));
   const totalPaginas = Math.max(1, Math.ceil(total / POR_PAGINA_VENTAS));
   const pagina = Math.min(paginaSolicitada, totalPaginas);
   const offset = (pagina - 1) * POR_PAGINA_VENTAS;

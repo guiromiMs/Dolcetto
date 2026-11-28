@@ -7,7 +7,7 @@ const db = require('./db/conexion');
 function obtenerResumenInicio(umbralStockBajo = 10) {
   const umbral = Number.isFinite(Number(umbralStockBajo)) ? Number(umbralStockBajo) : 10;
 
-  // 1. Indicadores de ventas de hoy (hora local de SQLite)
+  // 1. Indicadores de ventas netas de hoy (Ventas de hoy - Devoluciones de hoy)
   const filaVentasHoy = db
     .prepare(
       `SELECT
@@ -17,6 +17,20 @@ function obtenerResumenInicio(umbralStockBajo = 10) {
        WHERE DATE(fecha_hora) = DATE('now', 'localtime')`
     )
     .get();
+
+  const filaDevolucionesHoy = db
+    .prepare(
+      `SELECT
+         COALESCE(SUM(total_devuelto), 0) AS total_devuelto_hoy
+       FROM DEVOLUCIONES
+       WHERE DATE(fecha_hora) = DATE('now', 'localtime')`
+    )
+    .get();
+
+  const ventasNetasHoy = Math.max(
+    0,
+    Number(filaVentasHoy.total_hoy || 0) - Number(filaDevolucionesHoy.total_devuelto_hoy || 0)
+  );
 
   // 2. Indicadores de productos activos y alertas de stock bajo
   const filaProductos = db
@@ -89,7 +103,7 @@ function obtenerResumenInicio(umbralStockBajo = 10) {
   return {
     ok: true,
     indicadores: {
-      ventasHoy: Number(filaVentasHoy.total_hoy || 0),
+      ventasHoy: Number(ventasNetasHoy.toFixed(2)),
       ticketsEmitidos: Number(filaVentasHoy.tickets_hoy || 0),
       productosActivos: Number(filaProductos.activos || 0),
       alertasStock: Number(filaProductos.stock_bajo || 0)
